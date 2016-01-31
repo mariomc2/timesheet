@@ -1,0 +1,145 @@
+== README
+
+This README would normally document whatever steps are necessary to get the
+application up and running.
+
+Things you may want to cover:
+
+* Ruby version
+
+* System dependencies
+
+* Configuration
+
+* Database creation
+
+* Database initialization
+
+* How to run the test suite
+
+* Services (job queues, cache servers, search engines, etc.)
+
+* Deployment instructions
+
+* ...
+
+
+Please feel free to use a different markup language if you do not plan to run
+<tt>rake doc:app</tt>.
+
+=============================================================================
+My Walkthrough
+=============================================================================
+
+On Sites folder terminal: 
+rails new timesheet –d mysql 
+
+In Gemfile  file:
+Comment out the list below and leave only rails and mysql2 gems: 
+	Sass-rails 
+	Uglifier 
+	CoffeScript 
+	Jquery 
+	Turbolinks 
+	Jbuilder 
+Add gem 'passenger'
+
+Open /Config/database.yml: comment the database name and set the passwor d of the 
+development database. 
+
+In Terminal:
+mysql -u root -p
+
+CREATE DATABASE  timesheet_development;
+
+GRANT ALL PRIVILEGES ON timesheet_development.* TO 'timesheet_devel'@'localhost' IDENTIFIED BY 'database';
+SHOW GRANTS FOR 'timesheet_devel'@'localhost';
+
+Open Config/database.yml: change username and password accordingly
+
+In Terminal
+rake db:schema:dump
+
+Check in folder /db/schema.rb
+
+=============================================================================
+
+In Terminal (with camel case):
+
+rails generate model Company
+rails generate model Branch
+rails generate model Professional
+rails generate model Client
+rails generate model CompanyAppointment
+rails generate model ProfessionalAppointment
+rails generate model Employment
+rails generate model ContactDetail
+rails generate migration ClientProfessional
+
+In Terminal:
+rake db:migrate
+
+mysql -u timesheet_devel -p timesheet_development
+
+=============================================================================
+
+In Terminal:
+
+rails generate controller Professionals index show new edit delete
+
+=============================================================================
+
+# Add multi language
+
+#/config/application.rb 
+#Uncomment and change 
+config.i18n.default_locale = :es
+
+# app/controllers/application_controller.rb 
+
+def default_url_options(options = {})
+	{ locale: I18n.locale }.merge options
+end
+
+# for each controller 
+before_action :set_locale
+
+def set_locale
+	I18n.locale = params[:locale] || I18n.default_locale
+end
+
+#in the route file
+get '/:locale' => 'timesheet#index'
+
+scope “(:locale)”, locale: /es|en/ do
+  resources :professionals do
+    member do
+      get :delete
+    end
+  end
+end
+
+# Gemsfile 
+# adds pluralization for spanish 
+gem 'inflections'
+
+# update the views
+
+=============================================================================
+
+# Table tools
+# http://www.datatables.net/manual/installation
+# In the /app/views/index
+<%= javascript_tag("$(document).ready( function () {$('#index_table').DataTable();} );") %>
+
+=============================================================================
+
+# To put datetime picker
+# http://eonasdan.github.io/bootstrap-datetimepicker/
+
+# Adds datetime picker
+gem 'momentjs-rails', '>= 2.9.0'
+gem 'bootstrap3-datetimepicker-rails', '~> 4.17.37'
+
+=============================================================================
+

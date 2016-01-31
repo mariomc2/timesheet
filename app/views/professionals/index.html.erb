@@ -1,0 +1,57 @@
+<% @page_title = t(:professional).pluralize(locale) %>
+
+<div class="professionals index">
+  
+
+  <%= link_to(image_tag('plus_sign.png', :size => '11x11', :alt => '+') + " " +t(:add_new_professional), new_professional_path, :class => 'action new') %>
+  
+  <div><%= @professionals.size.to_s + " " + t(:professional).pluralize(@professionals.size, locale) + " " + t(:found) %></div>
+  
+
+
+  <div class="table-responsive">
+    <table id="index_table" class="display responsive" summary="Professional list">
+      <thead>
+        <tr>
+          <th>&nbsp;</th>
+          <th><%= t(:first_name) %></th>
+          <th><%= t(:last_name) %></th>
+          <th><%= t(:email) %></th>
+          <th><%= t(:id) %></th>
+          <th><%= t(:dob) %></th>
+          <th><%= t(:speciality) %></th>
+          <th><%= t(:company).pluralize(locale) %></th>
+          <th><%= t(:client).pluralize(locale) %></th>
+          <th><%= t(:appointment).pluralize(locale) %></th>
+          <th><%= t(:action) %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @professionals.each do |professional| %>
+        
+          <tr class="<%= cycle('odd', 'even') %>">
+            <td><%= professional.id %></td>
+            <td><%= professional.first_name %></td>
+            <td><%= professional.last_name %></td>
+            <td><%= professional.email %></td>
+            <td><%= professional.id_code %></td>
+            <td><%= professional.dob %></td>
+            <td><%= professional.speciality %></td>
+            <td class="center"><%= professional.companies.size %></td>
+            <td class="center"><%= professional.clients.size %></td>
+            <td class="center"><%= professional.professional_appointments.size %></td>
+            <td class="actions">
+              <%= link_to(t(:show), professional_path(professional.id), :class => 'action show') %>
+              <%= link_to(t(:edit), edit_professional_path(professional.id), :class => 'action edit') %>
+              <%= link_to(t(:delete), delete_professional_path(professional.id), :class => 'action delete') %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+<%= javascript_tag("$(document).ready( function () {$('#index_table').DataTable();} );") %>
+<%= javascript_tag("$('#index_table').DataTable( {responsive: true, fixedHeader: true} );") %>
+
+</div>

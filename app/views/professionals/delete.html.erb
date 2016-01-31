@@ -1,0 +1,18 @@
+<% @page_title = t(:professional).pluralize(locale) %>
+
+<%= link_to("<< " + t(:return_to), professionals_path, :class => 'back-link') %>
+
+<div class="professional delete">
+	<h2><%= t(:delete) + " " + t(:professional) %></h2>
+
+	<%= form_for(:professional, :url => professional_path(@professional.id), :html => {:method => :delete}) do |f| %>
+
+		<p> <%= t(:delete_message) %> </p>
+
+		<p class="reference-name"><%= @professional.email %></p>
+
+		<div class="form-buttons">
+			<%= submit_tag(t(:delete) + " " + t(:professional)) %>
+		</div>
+	<% end %>
+</div>

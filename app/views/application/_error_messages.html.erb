@@ -1,0 +1,11 @@
+<% if object && object.errors.size > 0 %>
+	<div id="errorExplanation">
+		<h2><%= object.errors.size.to_s + " " + "error".pluralize(object.errors.size, locale) + " " + t(:save_error)%></h2>
+		<p><%= t(:field_prob)%></p>
+		<ul>
+		<% object.errors.full_messages.each do |msg| %>
+			<li><%= msg %></li>
+		<% end %>
+		</ul>
+	</div>
+<% end %>

@@ -1,0 +1,18 @@
+<% @page_title = t(:professional).pluralize(locale) %>
+
+<%= link_to("<< " + t(:return_to), professionals_path, :class => 'back-link') %>
+
+<div class="professionals new">
+  <h2><%= t(:create) + " " + t(:professional) %></h2>
+
+  <%= form_for(@professional) do |f| %>
+
+    <%= render(:partial => "form", :locals => {:f => f}) %>
+
+    <div class="form-buttons">
+      <%= submit_tag(t(:create) + " " + t(:professional)) %>
+    </div>
+
+  <% end %>
+
+</div>
