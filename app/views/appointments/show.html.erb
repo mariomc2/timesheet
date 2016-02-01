@@ -1,0 +1,82 @@
+<% @page_title = t(:appointment).pluralize(locale) %>
+
+<%= link_to("<< " + t(:return_to), appointments_path, :class => 'back-link') %>
+
+<div class="appointments show">
+  <h2><%= t(:show) + " " + t(:appointment) %></h2>
+
+  <div class="table-responsive">
+    <table id="show_table" class="display responsive" summary="appointment detail view">
+      <tbody>
+        <tr>
+          <th><%= t(:company) %></th>
+          <td><%= @appointment.company_id %></td>
+        </tr>
+        <tr>
+          <th><%= t(:branch) %></th>
+          <td><%= @appointment.branch_id %></td>
+        </tr>
+        <tr>
+          <th><%= t(:professional) %></th>
+          <td><%= @appointment.professional_id %></td>
+        </tr>
+        <tr>
+          <th><%= t(:client) %></th>
+          <td><%= @appointment.client_id %></td>
+        </tr>
+        <tr>
+          <th><%= t(:shared) %></th>
+          <td><%= @appointment.shared %></td>
+        </tr>
+        <tr>
+          <th><%= t(:date_time) %></th>
+          <td><%= @appointment.date_time %></td>
+        </tr>
+        <tr>
+          <th><%= t(:status) %></th>
+          <td><%= @appointment.status %></td>
+        </tr>
+        <tr>
+          <th><%= t(:needs_folloup) %></th>
+          <td><%= @appointment.needs_folloup %></td>
+        </tr>
+        <tr>
+          <th><%= t(:task_type) %></th>
+          <td><%= @appointment.task_type %></td>
+        </tr>
+        <tr>
+          <th><%= t(:task_note) %></th>
+          <td><%= @appointment.task_note %></td>
+        </tr>
+        <tr>
+          <th><%= t(:total_project_price) %></th>
+          <td><%= @appointment.total_project_price %></td>
+        </tr>
+        <tr>
+          <th><%= t(:task_payment) %></th>
+          <td><%= @appointment.task_payment %></td>
+        </tr>
+        <tr>
+          <th><%= t(:professional_fee) %></th>
+          <td><%= @appointment.professional_fee %></td>
+        </tr>
+        <tr>
+          <th><%= t(:remaining_project_payment) %></th>
+          <td><%= @appointment.remaining_project_payment %></td>
+        </tr>
+        <tr>
+          <th><%= t(:created_at) %></th>
+          <td><%= @appointment.created_at %></td>
+        </tr>
+        <tr>
+          <th><%= t(:updated_at) %></th>
+          <td><%= @appointment.updated_at %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+<%= javascript_tag("$(document).ready( function () {$('#show_table').DataTable();} );") %>
+<%= javascript_tag("$('#show_table').DataTable( {responsive: true, paging: false} );") %>
+
+</div>

@@ -23,7 +23,7 @@ class ProfessionalsController < ApplicationController
     if @professional.save
     # If save succeeds, redirect to the index action
       flash[:notice] = "#{t(:professional)} #{t(:create_success)}"
-      redirect_to(:action => 'index')
+      redirect_to(professionals_path)
     else
     # If save fails, redisplay the from so user can fix problems
       render('new')
@@ -41,7 +41,7 @@ class ProfessionalsController < ApplicationController
     if @professional.update_attributes(professional_params)
       # If update succeeds, redirect to the index action
       flash[:notice] = "#{t(:professional)} #{t(:update_success)}"
-      redirect_to(:action => 'show', :id => @professional.id)
+      redirect_to(professional_path(@professional.id))
     else
       # If save fails, redisplay the from so user can fix problems
       render('edit')
@@ -55,7 +55,7 @@ class ProfessionalsController < ApplicationController
   def destroy
     professional = Professional.find(params[:id]).destroy
     flash[:notice] = "#{t(:professional)} '#{professional.email}' #{t(:destroy_success)}"
-    redirect_to(:action => 'index')
+    redirect_to(professionals_path)
   end
 
   private

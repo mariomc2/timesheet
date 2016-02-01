@@ -1,0 +1,18 @@
+<% @page_title = t(:appointment).pluralize(locale) %>
+
+<%= link_to("<< " + t(:return_to), appointments_path, :class => 'back-link') %>
+
+<div class="appointment delete">
+	<h2><%= t(:delete) + " " + t(:appointment) %></h2>
+
+	<%= form_for(:appointment, :url => appointment_path(@appointment.id), :html => {:method => :delete}) do |f| %>
+
+		<p> <%= t(:delete_message) %> </p>
+
+		<p class="reference-name"><%= @appointment.date_time %></p>
+
+		<div class="form-buttons">
+			<%= submit_tag(t(:delete) + " " + t(:appointment)) %>
+		</div>
+	<% end %>
+</div>

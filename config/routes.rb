@@ -1,10 +1,19 @@
 Rails.application.routes.draw do
 
+
   #match ':controller(/:action(/:id))', :via => [:get, :post]
   root "professionals#index"
   get '/:locale' => 'professionals#index'
   scope "(:locale)", locale: /es|en/ do
     resources :professionals do
+      member do
+        get :delete
+      end
+    end
+  end
+
+  scope "(:locale)", locale: /es|en/ do
+    resources :appointments do
       member do
         get :delete
       end

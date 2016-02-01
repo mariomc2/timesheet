@@ -143,3 +143,6 @@ gem 'bootstrap3-datetimepicker-rails', '~> 4.17.37'
 
 =============================================================================
 
+In Terminal:
+
+rails generate controller Appointments index show new edit delete

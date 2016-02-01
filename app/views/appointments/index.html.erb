@@ -1,0 +1,55 @@
+<% @page_title = t(:appointment).pluralize(locale) %>
+
+<div class="appointments index">
+  
+
+  <%= link_to(image_tag('plus_sign.png', :size => '11x11', :alt => '+') + " " +t(:add_new_appointment), new_appointment_path, :class => 'action new') %>
+  
+  <div><%= @appointments.size.to_s + " " + t(:appointment).pluralize(@appointments.size, locale) + " " + t(:found) %></div>
+  
+
+
+  <div class="table-responsive">
+    <table id="index_table" class="display responsive" summary="appointment list">
+      <thead class="thead-inverse">
+        <tr>
+          <th>&nbsp;</th>
+          <th><%= t(:shared) %></th>
+          <th><%= t(:company) %></th>
+          <th><%= t(:branch) %></th>
+          <th><%= t(:professional) %></th>
+          <th><%= t(:date_time) %></th>
+          <th><%= t(:status) %></th>
+          <th><%= t(:task_type) %></th>
+          <th><%= t(:professional_fee) %></th>
+          <th><%= t(:action) %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @appointments.each do |appointment| %>
+        
+          <tr class="<%= cycle('odd', 'even') %>">
+            <td><%= appointment.id %></td>
+            <td><%= appointment.shared %></td>
+            <td><%= appointment.company_id %></td>
+            <td><%= appointment.branch_id %></td>
+            <td><%= appointment.professional_id %></td>
+            <td><%= appointment.date_time %></td>
+            <td><%= appointment.status %></td>
+            <td><%= appointment.task_type %></td>
+            <td><%= appointment.professional_fee %></td>
+            <td class="actions">
+              <%= link_to(t(:show), appointment_path(appointment.id), :class => 'action show') %>
+              <%= link_to(t(:edit), edit_appointment_path(appointment.id), :class => 'action edit') %>
+              <%= link_to(t(:delete), delete_appointment_path(appointment.id), :class => 'action delete') %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+<%= javascript_tag("$(document).ready( function () {$('#index_table').DataTable();} );") %>
+<%= javascript_tag("$('#index_table').DataTable( {responsive: true, fixedHeader: true} );") %>
+
+</div>

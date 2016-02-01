@@ -29,6 +29,19 @@ en:
   update: Update
   delete: Delete
   professional: Professional
+  company: Company
+  branch: Branch
+  client: Client
+  appointment: Appointment
+  shared: Shared
+  status: Status
+  needs_folloup: Needs Followup
+  task_type: Task Type
+  task_note: Task Note
+  total_project_price: Total Project Price
+  task_payment: Task Payment
+  professional_fee: Professional Fee
+  remaining_project_payment: Ramaining Project Payment
   add_new_professional: Add new professional
   first_name: Name
   last_name: Last Name
@@ -36,14 +49,12 @@ en:
   id: ID
   dob: Date of Birth
   speciality: Speciality
-  company: Company
-  client: Client
-  appointment: Appointment
   pass_active: Password Active?
   acc_active: Account Active?
   created_at: Created at
   updated_at: Updated at
   last_in: Last login
+  date_time: Date/Time
   create_success: created successfully
   update_success: updated successfully
   delete_message: Are you sure you want to delete this record permanently?

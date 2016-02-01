@@ -1,0 +1,18 @@
+<% @page_title = t(:appointment).pluralize(locale) %>
+
+<%= link_to("<< " + t(:return_to), appointments_path, :class => 'back-link') %>
+
+<div class="appointments new">
+  <h2><%= t(:create) + " " + t(:appointment) %></h2>
+
+  <%= form_for(@appointment, :url => appointments_path) do |f| %>
+
+    <%= render(:partial => "form", :locals => {:f => f}) %>
+
+    <div class="form-buttons">
+      <%= submit_tag(t(:create) + " " + t(:appointment)) %>
+    </div>
+
+  <% end %>
+
+</div>

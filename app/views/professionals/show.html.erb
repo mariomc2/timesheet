@@ -5,47 +5,54 @@
 <div class="Professionals show">
   <h2><%= t(:show) + " " + t(:professional) %></h2>
 
-  <table summary="Professional detail view">
-    <tr>
-      <th><%= t(:first_name) %></th>
-      <td><%= @professional.first_name %></td>
-    </tr>
-    <tr>
-      <th><%= t(:last_name) %></th>
-      <td><%= @professional.last_name %></td>
-    </tr>
-    <tr>
-      <th><%= t(:id) %></th>
-      <td><%= @professional.id_code %></td>
-    </tr>
-    <tr>
-      <th><%= t(:dob) %></th>
-      <td><%= @professional.dob %></td>
-    </tr>
-    <tr>
-      <th><%= t(:email) %></th>
-      <td><%= @professional.email %></td>
-    </tr>
-    <tr>
-      <th><%= t(:speciality) %></th>
-      <td><%= @professional.speciality %></td>
-    </tr>
-    <tr>
-      <th><%= t(:pass_active) %></th>
-      <td><%= status_tag(@professional.pass_active) %></td>
-    </tr>
-    <tr>
-      <th><%= t(:acc_active) %></th>
-      <td><%= status_tag(@professional.acc_active) %></td>
-    </tr>
-    <tr>
-      <th><%= t(:created_at) %></th>
-      <td><%= @professional.created_at %></td>
-    </tr>
-    <tr>
-      <th><%= t(:updated_at) %></th>
-      <td><%= @professional.updated_at %></td>
-    </tr>
-  </table>
+  <div class="table-responsive">
+    <table id="show_table" class="display responsive" summary="Professional detail view">
+      <tbody>
+        <tr>
+          <th><%= t(:first_name) %></th>
+          <td><%= @professional.first_name %></td>
+        </tr>
+        <tr>
+          <th><%= t(:last_name) %></th>
+          <td><%= @professional.last_name %></td>
+        </tr>
+        <tr>
+          <th><%= t(:id) %></th>
+          <td><%= @professional.id_code %></td>
+        </tr>
+        <tr>
+          <th><%= t(:dob) %></th>
+          <td><%= @professional.dob %></td>
+        </tr>
+        <tr>
+          <th><%= t(:email) %></th>
+          <td><%= @professional.email %></td>
+        </tr>
+        <tr>
+          <th><%= t(:speciality) %></th>
+          <td><%= @professional.speciality %></td>
+        </tr>
+        <tr>
+          <th><%= t(:pass_active) %></th>
+          <td><%= status_tag(@professional.pass_active) %></td>
+        </tr>
+        <tr>
+          <th><%= t(:acc_active) %></th>
+          <td><%= status_tag(@professional.acc_active) %></td>
+        </tr>
+        <tr>
+          <th><%= t(:created_at) %></th>
+          <td><%= @professional.created_at %></td>
+        </tr>
+        <tr>
+          <th><%= t(:updated_at) %></th>
+          <td><%= @professional.updated_at %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+<%= javascript_tag("$(document).ready( function () {$('#show_table').DataTable();} );") %>
+<%= javascript_tag("$('#show_table').DataTable( {responsive: true, paging: false} );") %>
 
 </div>

@@ -9,6 +9,19 @@ es:
   update: Actualizar
   delete: Borrar
   professional: Profesional
+  company: Clinica
+  branch: Sucursal
+  client: Paciente
+  appointment: Cita
+  shared: Compartida
+  status: Estado
+  needs_folloup: Necesita Seguimiento
+  task_type: Procedimiento
+  task_note: Notas
+  total_project_price: Precio Total de Tratamiento
+  task_payment: Pago del Procedimiento
+  professional_fee: Pago a Profesional
+  remaining_project_payment: Saldo por Tratamiento
   add_new_professional: Agregar nuevo profesional
   first_name: Nombre
   last_name: Apellido
@@ -16,14 +29,12 @@ es:
   id: Identificación
   dob: Fecha de Nacimiento
   speciality: Especialidad
-  company: Clinica
-  client: Paciente
-  appointment: Cita
   pass_active: Password Activo?
   acc_active: Cuenta Activa?
   created_at: Creado
   updated_at: Actualizado
   last_in: Ultima Entrada
+  date_time: Fecha/Hora
   create_success: creado satisfactoriamente
   update_success: actualizado satisfactoriamente
   delete_message: Esta seguro que desea borrar este record permanentemente?

@@ -7,6 +7,8 @@ class CreateProfessionalAppointments < ActiveRecord::Migration
     	t.integer "professional_id"
     	t.integer "client_id"
 
+      t.boolean "shared", :default => false
+
     	t.datetime "date_time", :null => false
 
        t.string "status"

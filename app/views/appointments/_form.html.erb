@@ -1,0 +1,73 @@
+<%= error_messages_for(@appointment) %>
+
+<div class="table-responsive">
+  <table id="fields_table" class="display responsive" summary="Appointment form fields">
+    <tbody>
+      <tr>
+        <th><%= f.label(:company_id, t(:company)) %></th>
+        <td><%= f.text_field(:company_id) %></td>
+      </tr>
+      <tr>
+        <th><%= f.label(:branch_id, t(:branch)) %></th>
+        <td><%= f.text_field(:branch_id) %></td>
+      </tr>
+      <tr>
+        <th><%= f.label(:professional_id, t(:professional)) %></th>
+        <td><%= f.text_field(:professional_id) %></td>
+      </tr>
+      <tr>
+        <th><%= f.label(:client_id, t(:client)) %></th>
+        <td><%= f.text_field(:client_id) %></td>
+      </tr>
+      <tr>
+        <th><%= f.label(:shared, t(:client)) %></th>
+        <td><%= f.check_box(:shared) %></td>
+      </tr>
+      <tr>
+        <th><%= f.label(:needs_folloup, t(:needs_folloup)) %></th>
+        <td><%= f.check_box(:needs_folloup) %></td>
+      </tr>
+      <tr>
+        <th><%= f.label(:date_time, t(:date_time)) %></th>
+        <td><%= f.datetime_field(:date_time, :id => "datetimepicker1") %></td>
+      </tr>
+      <tr>
+        <th><%= f.label(:status, t(:status)) %></th>
+        <td><%= f.text_field(:status) %></td>
+      </tr>
+      <tr>
+        <th><%= f.label(:task_type, t(:task_type)) %></th>
+        <td><%= f.text_field(:task_type) %></td>
+      </tr>
+      <tr>
+        <th><%= f.label(:task_note, t(:task_note)) %></th>
+        <td><%= f.text_area(:task_note) %></td>
+      </tr>
+
+      <tr>
+        <th><%= f.label(:total_project_price, t(:total_project_price)) %></th>
+        <td><%= f.text_field(:total_project_price) %></td>
+      </tr>
+      <tr>
+        <th><%= f.label(:task_payment, t(:task_payment)) %></th>
+        <td><%= f.text_field(:task_payment) %></td>
+      </tr>
+      <tr>
+        <th><%= f.label(:professional_fee, t(:professional_fee)) %></th>
+        <td><%= f.text_field(:professional_fee) %></td>
+      </tr>
+      <tr>
+        <th><%= f.label(:remaining_project_payment, t(:remaining_project_payment)) %></th>
+        <td><%= f.text_field(:remaining_project_payment) %></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+<%= javascript_tag("$(document).ready( function () {$('#fields_table').DataTable();} );") %>
+<%= javascript_tag("$('#fields_table').DataTable( {responsive: true, paging: false} );") %>
+<%= javascript_tag("$(function () {$('#datetimepicker1').datetimepicker({locale: '" + I18n.locale.to_s + "',format: 'DD/MM/YYYY HH:mm',defaultDate: '" + @appointment.date_time.to_s + "',inline: true,sideBySide: true})});") %>
+        
+
+

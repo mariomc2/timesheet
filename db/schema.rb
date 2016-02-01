@@ -76,6 +76,7 @@ ActiveRecord::Schema.define(version: 20160128055713) do
     t.integer  "professional_id",             limit: 4
     t.integer  "client_id",                   limit: 4
     t.integer  "professional_appointment_id", limit: 4
+    t.boolean  "shared",                                    default: true
     t.datetime "date_time",                                                 null: false
     t.string   "status",                      limit: 255
     t.string   "photo",                       limit: 255
@@ -133,6 +134,7 @@ ActiveRecord::Schema.define(version: 20160128055713) do
     t.integer  "branch_id",                 limit: 4
     t.integer  "professional_id",           limit: 4
     t.integer  "client_id",                 limit: 4
+    t.boolean  "shared",                                  default: false
     t.datetime "date_time",                                               null: false
     t.string   "status",                    limit: 255
     t.string   "photo",                     limit: 255
