@@ -1,11 +1,12 @@
 <% @page_title = t(:appointment).pluralize(locale) %>
 
-<%= link_to("<< " + t(:return_to), appointments_path, :class => 'back-link') %>
+<%= link_to("<< " + t(:return_to), professional_appointments_path(@professional.id), :class => 'back-link') %>
+
 
 <div class="appointments new">
   <h2><%= t(:create) + " " + t(:appointment) %></h2>
 
-  <%= form_for(@appointment, :url => appointments_path) do |f| %>
+  <%= form_for(@appointment, :url => professional_appointments_path(@professional.id)) do |f| %>
 
     <%= render(:partial => "form", :locals => {:f => f}) %>
 

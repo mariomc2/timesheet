@@ -9,16 +9,16 @@ Rails.application.routes.draw do
       member do
         get :delete
       end
-    end
-  end
-
-  scope "(:locale)", locale: /es|en/ do
-    resources :appointments do
-      member do
-        get :delete
+      resources :appointments do
+        member do
+          get :delete
+        end
       end
     end
+  
   end
+
+  
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

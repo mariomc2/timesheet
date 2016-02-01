@@ -1,6 +1,6 @@
 <% @page_title = t(:appointment).pluralize(locale) %>
 
-<%= link_to("<< " + t(:return_to), appointments_path, :class => 'back-link') %>
+<%= link_to("<< " + t(:return_to), professional_appointments_path(@professional.id), :class => 'back-link') %>
 
 <div class="appointments show">
   <h2><%= t(:show) + " " + t(:appointment) %></h2>

@@ -33,6 +33,18 @@
           <td><%= @professional.speciality %></td>
         </tr>
         <tr>
+          <th><%= t(:company).pluralize(locale) %></th>
+          <td><%= @professional.companies.size %></td>
+        </tr>
+        <tr>
+          <th><%= t(:client).pluralize(locale) %></th>
+          <td><%= @professional.clients.size %></td>
+        </tr>
+        <tr>
+          <th><%= link_to(t(:appointment).pluralize(locale), professional_appointments_path(@professional.id))  %></th>
+          <td><%= @professional.professional_appointments.size %></td>
+        </tr>
+        <tr>
           <th><%= t(:pass_active) %></th>
           <td><%= status_tag(@professional.pass_active) %></td>
         </tr>

@@ -1,7 +1,7 @@
 class Professional < ActiveRecord::Base
 	has_many :contact_details
 	has_many :company_appointments
-	has_many :professional_appointments
+	has_many :professional_appointments, :dependent => :destroy
 	has_and_belongs_to_many :clients
 	has_many :employments
 	has_many :companies, :through => :employments
