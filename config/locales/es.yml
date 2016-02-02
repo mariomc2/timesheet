@@ -35,6 +35,8 @@ es:
   updated_at: Actualizado
   last_in: Ultima Entrada
   date_time: Fecha/Hora
+  column: En Columna
+  search: Buscar
   create_success: creado satisfactoriamente
   update_success: actualizado satisfactoriamente
   delete_message: Esta seguro que desea borrar este record permanentemente?

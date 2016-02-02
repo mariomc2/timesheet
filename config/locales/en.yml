@@ -55,6 +55,8 @@ en:
   updated_at: Updated at
   last_in: Last login
   date_time: Date/Time
+  column: In Column
+  search: Search for
   create_success: created successfully
   update_success: updated successfully
   delete_message: Are you sure you want to delete this record permanently?

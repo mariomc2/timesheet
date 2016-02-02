@@ -6,18 +6,32 @@
   <%= link_to(image_tag('plus_sign.png', :size => '11x11', :alt => '+') + " " +t(:add_new_appointment), new_professional_appointment_path(@professional.id), :class => 'action new') %>
   
   <div><%= @appointments.size.to_s + " " + t(:appointment).pluralize(@appointments.size, locale) + " " + t(:found) %></div>
-  
 
+  
 
   <div class="table-responsive">
     <table id="index_table" class="display responsive" summary="appointment list">
       <thead class="thead-inverse">
         <tr>
           <th>&nbsp;</th>
+          <th><%= "--" %></th>
+          <th><%= select_tag("col2_filter", "",html_options={ class: "column_filter", :onchange => "filterColumn(2)", :include_blank => true}) %></th>
+          <th><%= "--" %></th>
+          <th><%= "--" %></th>
+          <th><%= "--" %></th>
+          <th><%= "--" %></th>
+          <th><%= select_tag("col7_filter", "",html_options={ class: "column_filter", :onchange => "filterColumn(7)", :include_blank => true}) %></th>
+          <th><%= "--" %></th>
+          <th><%= "--" %></th>
+          <th><%= "--" %></th>
+        </tr>
+        <tr>
+          <th>&nbsp;</th>
           <th><%= t(:shared) %></th>
           <th><%= t(:company) %></th>
           <th><%= t(:branch) %></th>
           <th><%= t(:professional) %></th>
+          <th><%= t(:client) %></th>
           <th><%= t(:date_time) %></th>
           <th><%= t(:status) %></th>
           <th><%= t(:task_type) %></th>
@@ -34,6 +48,7 @@
             <td><%= appointment.company_id %></td>
             <td><%= appointment.branch_id %></td>
             <td><%= appointment.professional_id %></td>
+            <td><%= appointment.client_id %></td>
             <td><%= appointment.date_time %></td>
             <td><%= appointment.status %></td>
             <td><%= appointment.task_type %></td>
@@ -49,7 +64,34 @@
     </table>
   </div>
 
-<%= javascript_tag("$(document).ready( function () {$('#index_table').DataTable();} );") %>
-<%= javascript_tag("$('#index_table').DataTable( {responsive: true, fixedHeader: true} );") %>
+<%= javascript_tag("$(document).ready( function () {$('#index_table').DataTable({responsive: true, fixedHeader: true});} );") %>
 
+<%= javascript_tag("function filterColumn ( i ) {$('#index_table').DataTable().column( i ).search( $('#col'+i+'_filter').val()).draw();}") %>
+
+<%= javascript_tag("window.onload = function(){$('#index_table').DataTable().column(7).data().unique().sort().each( function ( value ) {select = document.getElementById('col7_filter'), option = null; option = document.createElement('option');option.value = value;option.innerHTML = value;select.appendChild(option);} );$('#index_table').DataTable().column(2).data().unique().sort().each( function ( value ) {select = document.getElementById('col2_filter'), option = null; option = document.createElement('option');option.value = value;option.innerHTML = value;select.appendChild(option);} );};") %>
+
+
+
+<!--
+  options_for_select(["A","B"]),
+
+window.onload = function(){
+$('#index_table').DataTable().column(7).data().unique().sort.each( function ( value ) {
+        select = document.getElementById('col7_filter'), option = null;
+        option = document.createElement('option');
+        option.value = value;
+        option.innerHTML = value;
+        select.appendChild(option);
+    } );};
+
+window.onload = function(){
+    select = document.getElementById('col7_filter'), option = null;
+    for(var i = 0; i <= 10; i++) {
+        option = document.createElement('option');
+        option.value = i;
+        option.innerHTML = i;
+        select.appendChild(option);
+    }
+};
+-->
 </div>
