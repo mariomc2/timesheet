@@ -2,12 +2,62 @@ Rails.application.routes.draw do
 
 
   #match ':controller(/:action(/:id))', :via => [:get, :post]
-  root "professionals#index"
-  get '/:locale' => 'professionals#index'
+  root "access#login"
+  get '/:locale' => 'access#login'
+  
+  scope "(:locale)", locale: /es|en/ do
+    resources :access do
+    end
+  end
+
   scope "(:locale)", locale: /es|en/ do
     resources :professionals do
       member do
         get :delete
+      end
+      resources :companies do
+        member do
+          get :delete
+        end
+      end
+      resources :branches do
+        member do
+          get :delete
+        end
+      end
+      resources :clients do
+        member do
+          get :delete
+        end
+      end
+      resources :appointments do
+        member do
+          get :delete
+        end
+      end
+    end
+  
+  end
+
+  scope "(:locale)", locale: /es|en/ do
+    resources :companies do
+      member do
+        get :delete
+      end
+      resources :companies do
+        member do
+          get :delete
+        end
+      end
+      resources :branches do
+        member do
+          get :delete
+        end
+      end
+      resources :clients do
+        member do
+          get :delete
+        end
       end
       resources :appointments do
         member do

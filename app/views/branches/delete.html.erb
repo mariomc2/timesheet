@@ -1,0 +1,18 @@
+<% @page_title = t(:branch).pluralize(locale) %>
+
+<%= link_to("<< " + t(:return_to), [@user, params[:controller]], :class => 'back-link') %>
+
+<div class="branch delete">
+	<h2><%= t(:delete) + " " + t(:branch) %></h2>
+
+	<%= form_for([@user, @branch], :html => {:method => :delete}) do |f| %>
+
+		<p> <%= t(:delete_message) %> </p>
+
+		<p class="reference-name"><%= @branch.name %></p>
+
+		<div class="form-buttons">
+			<%= submit_tag(t(:delete) + " " + t(:branch)) %>
+		</div>
+	<% end %>
+</div>

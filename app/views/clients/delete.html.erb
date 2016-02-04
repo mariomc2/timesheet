@@ -1,0 +1,18 @@
+<% @page_title = t(:client).pluralize(locale) %>
+
+<%= link_to("<< " + t(:return_to), [@user, params[:controller]], :class => 'back-link') %>
+
+<div class="client delete">
+	<h2><%= t(:delete) + " " + t(:client) %></h2>
+
+	<%= form_for([@user, @client], :html => {:method => :delete}) do |f| %>
+
+		<p> <%= t(:delete_message) %> </p>
+
+		<p class="reference-name"><%= @client.first_name %></p>
+
+		<div class="form-buttons">
+			<%= submit_tag(t(:delete) + " " + t(:client)) %>
+		</div>
+	<% end %>
+</div>

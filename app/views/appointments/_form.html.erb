@@ -6,8 +6,9 @@
       <tr>
         <th><%= f.label(:professional_id, t(:professional)) %></th>
         <td>
-          <%= @appointment.professional.first_name + " " + @appointment.professional.last_name %>
-          <%= f.hidden_field(:professional_id, :value => @appointment.professional.id) %>
+          <%= f.text_field(:professional_id) %>
+          <%#= @appointment.professional.first_name + " " + @appointment.professional.last_name %>
+          <%#= f.hidden_field(:professional_id, :value => @appointment.professional.id) %>
         </td>
       </tr>
       <tr>

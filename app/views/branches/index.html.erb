@@ -1,0 +1,51 @@
+<% @page_title = t(:branch).pluralize(locale) %>
+
+<div class="professionals index">
+  
+<%= link_to(image_tag('plus_sign.png', :size => '11x11', :alt => '+') + " " +t(:add_new_branch), [:new, @user, params[:controller].singularize], :class => 'action new') %>
+  
+
+  <div><%= @branches.size.to_s + " " + t(:branch).pluralize(@branches.size, locale) + " " + t(:found) %></div>
+  
+  <div class="table-responsive">
+    <table id="index_table" class="display responsive" summary="Branches list">
+      <thead class="thead-inverse">
+        <tr>
+          <th>&nbsp;</th>
+          <th><%= t(:name) %></th>
+          <th><%= t(:id) %></th>
+          <th><%= t(:email) %></th>   
+          <th><%= t(:company) %></th>        
+          <th><%= t(:professional).pluralize(locale) %></th>          
+          <th><%= t(:client).pluralize(locale) %></th>
+          <th><%= t(:appointment).pluralize(locale) %></th>
+          <th><%= t(:action) %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @branches.each do |branch| %>
+        
+          <tr class="<%= cycle('odd', 'even') %>">
+            <td><%= branch.id %></td>
+            <td><%= branch.name %></td>
+            <td><%= branch.id_code %></td>
+            <td><%= branch.email %></td>
+            <td class="center"><%= branch.company_id %></td>
+            <td class="center"><%= branch.company.professionals.size %></td>
+            <td class="center"><%= branch.clients.size %></td>            
+            <td class="center"><%= branch.appointments.size %></td>
+            <td class="actions">
+              <%= link_to(t(:show), [@user, branch], :class => 'action show') %>
+              <%= link_to(t(:edit), [:edit, @user, branch], :class => 'action edit') %>
+              <%= link_to(t(:delete), [:delete, @user, branch], :class => 'action delete') %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+<%= javascript_tag("$(document).ready( function () {$('#index_table').DataTable();} );") %>
+<%= javascript_tag("$('#index_table').DataTable( {responsive: true, fixedHeader: true} );") %>
+
+</div>

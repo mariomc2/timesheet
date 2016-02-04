@@ -1,0 +1,18 @@
+<% @page_title = t(:branch).pluralize(locale) %>
+
+<%= link_to("<< " + t(:return_to), [@user, params[:controller]], :class => 'back-link') %>
+
+<div class="branch edit">
+  <h2><%= t(:update) + " " + t(:branch) %></h2>
+
+  <%= form_for([@user, @branch]) do |f| %>
+
+    <%= render(:partial => "form", :locals => {:f => f}) %>
+
+    <div class="form-buttons">
+      <%= submit_tag(t(:edit) + " " + t(:branch)) %>
+    </div>
+
+  <% end %>
+
+</div>

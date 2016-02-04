@@ -1,0 +1,66 @@
+<% @page_title = t(:branch).pluralize(locale) %>
+
+<%= link_to("<< " + t(:return_to), [@user, params[:controller]], :class => 'back-link') %>
+
+<div class="Branches show">
+  <h2><%= t(:show) + " " + t(:branch) %></h2>
+
+  <div class="table-responsive">
+    <table id="show_table" class="display responsive" summary="branch detail view">
+      <tbody>
+        <tr>
+          <th><%= t(:name) %></th>
+          <td><%= @branch.name %></td>
+        </tr>        
+        <tr>
+          <th><%= t(:id) %></th>
+          <td><%= @branch.id_code %></td>
+        </tr>        
+        <tr>
+          <th><%= t(:email) %></th>
+          <td><%= @branch.email %></td>
+        </tr>
+        <tr>
+          <th><%= t(:company) %></th>
+          <td><%= @branch.company_id %></td>
+        </tr>       
+        <tr>
+          <th><%= t(:professional).pluralize(locale) %></th>
+          <td><%= @branch.company.professionals.size %></td>
+        </tr>
+        <tr>
+          <th><%= t(:client).pluralize(locale) %></th>
+          <td><%= @branch.clients.size %></td>
+        </tr>
+        <tr>
+          <th><%= link_to(t(:appointment).pluralize(locale), [@branch.company, :appointments])  %></th>
+          <td><%= @branch.appointments.size %></td>
+        </tr>
+        <tr>
+          <th><%= t(:pass_active) %></th>
+          <td><%= status_tag(@branch.pass_active) %></td>
+        </tr>
+        <tr>
+          <th><%= t(:acc_active) %></th>
+          <td><%= status_tag(@branch.acc_active) %></td>
+        </tr>
+        <tr>
+          <th><%= t(:last_in) %></th>
+          <td><%= @branch.last_in %></td>
+        </tr>
+        <tr>
+          <th><%= t(:created_at) %></th>
+          <td><%= @branch.created_at %></td>
+        </tr>
+        <tr>
+          <th><%= t(:updated_at) %></th>
+          <td><%= @branch.updated_at %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+<%= javascript_tag("$(document).ready( function () {$('#show_table').DataTable();} );") %>
+<%= javascript_tag("$('#show_table').DataTable( {responsive: true, paging: false} );") %>
+
+</div>

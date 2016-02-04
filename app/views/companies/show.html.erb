@@ -1,0 +1,66 @@
+<% @page_title = t(:company).pluralize(locale) %>
+
+<%= link_to("<< " + t(:return_to), [@user, params[:controller]], :class => 'back-link') %>
+
+<div class="Company show">
+  <h2><%= t(:show) + " " + t(:company) %></h2>
+
+  <div class="table-responsive">
+    <table id="show_table" class="display responsive" summary="Company detail view">
+      <tbody>
+        <tr>
+          <th><%= t(:name) %></th>
+          <td><%= @company.name %></td>
+        </tr>        
+        <tr>
+          <th><%= t(:id) %></th>
+          <td><%= @company.id_code %></td>
+        </tr>        
+        <tr>
+          <th><%= t(:email) %></th>
+          <td><%= @company.email %></td>
+        </tr>        
+        <tr>
+          <th><%= t(:professional).pluralize(locale) %></th>
+          <td><%= @company.professionals.size %></td>
+        </tr>
+        <tr>
+          <th><%= t(:branch).pluralize(locale) %></th>
+          <td><%= @company.branches.size %></td>
+        </tr>
+        <tr>
+          <th><%= t(:client).pluralize(locale) %></th>
+          <td><%= @company.clients.size %></td>
+        </tr>
+        <tr>
+          <th><%= link_to(t(:appointment).pluralize(locale), [@company, :appointments])  %></th>
+          <td><%= @company.appointments.size %></td>
+        </tr>
+        <tr>
+          <th><%= t(:pass_active) %></th>
+          <td><%= status_tag(@company.pass_active) %></td>
+        </tr>
+        <tr>
+          <th><%= t(:acc_active) %></th>
+          <td><%= status_tag(@company.acc_active) %></td>
+        </tr>
+        <tr>
+          <th><%= t(:last_in) %></th>
+          <td><%= @company.last_in %></td>
+        </tr>
+        <tr>
+          <th><%= t(:created_at) %></th>
+          <td><%= @company.created_at %></td>
+        </tr>
+        <tr>
+          <th><%= t(:updated_at) %></th>
+          <td><%= @company.updated_at %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+<%= javascript_tag("$(document).ready( function () {$('#show_table').DataTable();} );") %>
+<%= javascript_tag("$('#show_table').DataTable( {responsive: true, paging: false} );") %>
+
+</div>

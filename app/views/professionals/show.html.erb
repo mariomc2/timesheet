@@ -1,6 +1,6 @@
 <% @page_title = t(:professional).pluralize(locale) %>
 
-<%= link_to("<< " + t(:return_to), professionals_path, :class => 'back-link') %>
+<%= link_to("<< " + t(:return_to), [@user, params[:controller]], :class => 'back-link') %>
 
 <div class="Professionals show">
   <h2><%= t(:show) + " " + t(:professional) %></h2>
@@ -41,8 +41,8 @@
           <td><%= @professional.clients.size %></td>
         </tr>
         <tr>
-          <th><%= link_to(t(:appointment).pluralize(locale), professional_appointments_path(@professional.id))  %></th>
-          <td><%= @professional.professional_appointments.size %></td>
+          <th><%= link_to(t(:appointment).pluralize(locale), [@professional, :appointments])  %></th>
+          <td><%= @professional.appointments.size %></td>
         </tr>
         <tr>
           <th><%= t(:pass_active) %></th>

@@ -1,12 +1,11 @@
 <% @page_title = t(:appointment).pluralize(locale) %>
 
-<%= link_to("<< " + t(:return_to), professional_appointments_path(@professional.id), :class => 'back-link') %>
-
+<%= link_to("<< " + t(:return_to), [@user, params[:controller]], :class => 'back-link') %>
 
 <div class="appointment delete">
 	<h2><%= t(:delete) + " " + t(:appointment) %></h2>
 
-	<%= form_for(:appointment, :url => professional_appointment_path(@professional.id,@appointment.id), :html => {:method => :delete}) do |f| %>
+	<%= form_for([@user, @appointment], :html => {:method => :delete}) do |f| %>
 
 		<p> <%= t(:delete_message) %> </p>
 

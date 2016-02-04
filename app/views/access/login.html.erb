@@ -1,0 +1,72 @@
+<div class="container sign-in-up">
+  <div class="row">
+    <div class="col-md-4 col-md-offset-4">
+      <br>
+      <!-- Nav tabs -->
+      <div class="text-center">
+        <div >
+          <ul class="nav nav-tabs nav-justified">
+            <li class="active"><a href="#new" role="tab" data-toggle="tab" class="big btn btn-primary"><i class="fa fa-user-md"></i> <%= t(:professional) %></a></li>
+            <li><a href="#user" role="tab" data-toggle="tab" class="big btn btn-danger"><i class="fa fa-hospital-o"></i> <%= t(:company) %></a></li>
+          </ul>
+        </div>
+      </div>
+
+      <p class="text-center">Click para selecionar</p>
+      
+      <div class="tab-content">
+        <div class="tab-pane fade in active" id="new">
+          <br>
+          <%#= form_tag(:action => "attempt_login_professional") do |f| %>
+          <form action="/es/professionals">
+            <fieldset>
+              <div class="form-group">
+                <div class="right-inner-addon">
+                  <i class="fa fa-envelope"></i>
+                  <input class="form-control input-lg" placeholder="Email Address" type="text">
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="right-inner-addon">
+                  <i class="fa fa-key"></i>
+                  <input class="form-control input-lg" placeholder="Password" type="password">
+                </div>
+              </div>
+            </fieldset>
+          
+            <br>
+            <div class=" text-center">
+              <button class="btn btn-primary">Entrar como Profesional</button>
+            </div>
+            <%#= submit_tag("log in")%>
+          </form>
+          <%# end %>
+        </div>
+
+        <div class="tab-pane fade" id="user">
+          <br>
+          <form action="/es/companies">
+            <fieldset>
+              <div class="form-group">
+                <div class="right-inner-addon">
+                  <i class="fa fa-envelope"></i>
+                  <input class="form-control input-lg" placeholder="Email Address" type="text">
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="right-inner-addon">
+                  <i class="fa fa-key"></i>
+                  <input class="form-control input-lg" placeholder="Password" type="password">
+                </div>
+              </div>
+            </fieldset>
+            <br>
+            <div class=" text-center">
+              <button class="btn btn-danger">Entrar como Clinica</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

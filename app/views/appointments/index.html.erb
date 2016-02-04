@@ -2,9 +2,9 @@
 
 <div class="appointments index">
   
+<%= link_to(image_tag('plus_sign.png', :size => '11x11', :alt => '+') + " " +t(:add_new_appointment), [:new, @user, params[:controller].singularize], :class => 'action new') %>
 
-  <%= link_to(image_tag('plus_sign.png', :size => '11x11', :alt => '+') + " " +t(:add_new_appointment), new_professional_appointment_path(@professional.id), :class => 'action new') %>
-  
+    
   <div><%= @appointments.size.to_s + " " + t(:appointment).pluralize(@appointments.size, locale) + " " + t(:found) %></div>
 
   
@@ -54,9 +54,9 @@
             <td><%= appointment.task_type %></td>
             <td><%= appointment.professional_fee %></td>
             <td class="actions">
-              <%= link_to(t(:show), professional_appointment_path(@professional.id, appointment.id), :class => 'action show') %>
-              <%= link_to(t(:edit), edit_professional_appointment_path(@professional.id, appointment.id), :class => 'action edit') %>
-              <%= link_to(t(:delete), delete_professional_appointment_path(@professional.id, appointment.id), :class => 'action delete') %>
+              <%= link_to(t(:show), [@user, appointment], :class => 'action show') %>
+              <%= link_to(t(:edit), [:edit, @user, appointment], :class => 'action edit') %>
+              <%= link_to(t(:delete), [:delete, @user, appointment], :class => 'action delete') %>
             </td>
           </tr>
         <% end %>

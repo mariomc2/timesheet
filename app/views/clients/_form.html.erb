@@ -1,0 +1,39 @@
+<%= error_messages_for(@client) %>
+
+<div class="table-responsive">
+  <table id="fields_table" class="display responsive" summary="Client form fields">
+    <tbody>
+      <tr>
+        <th><%= f.label(:company_id, t(:company)) %></th>
+        <td><%= f.text_field(:company_id) %></td>
+      </tr>
+      <tr>
+        <th><%= f.label(:branch_id, t(:branch)) %></th>
+        <td><%= f.text_field(:branch_id) %></td>
+      </tr>
+      <tr>
+        <th><%= f.label(:first_name, t(:first_name)) %></th>
+        <td><%= f.text_field(:first_name) %></td>
+      </tr>
+      <tr>
+        <th><%= f.label(:last_name, t(:last_name)) %></th>
+        <td><%= f.text_field(:last_name) %></td>
+      </tr>
+      <tr>
+        <th><%= f.label(:id_code, t(:id)) %></th>
+        <td><%= f.text_field(:id_code) %></td>
+      </tr>
+      <tr>
+        <th><%= f.label(:dob, t(:dob)) %></th>
+        <td><%= f.date_select(:dob, {:start_year => 1900, :end_year => Time.now.year}) %></td>
+      </tr>
+      <tr>
+        <th><%= f.label(:email, t(:email)) %></th>
+        <td><%= f.text_field(:email) %></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<%= javascript_tag("$(document).ready( function () {$('#fields_table').DataTable();} );") %>
+<%= javascript_tag("$('#fields_table').DataTable( {responsive: true, paging: false} );") %>

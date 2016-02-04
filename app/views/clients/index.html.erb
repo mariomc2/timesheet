@@ -1,0 +1,95 @@
+<% @page_title = t(:client).pluralize(locale) %>
+
+<div class="clients index">
+  
+<%= link_to(image_tag('plus_sign.png', :size => '11x11', :alt => '+') + " " +t(:add_new_client), [:new, @user, params[:controller].singularize], :class => 'action new') %>
+
+    
+  <div><%= @clients.size.to_s + " " + t(:client).pluralize(@clients.size, locale) + " " + t(:found) %></div>
+
+  
+
+  <div class="table-responsive">
+    <table id="index_table" class="display responsive" summary="client list">
+      <thead class="thead-inverse">
+        <tr>
+          <th>&nbsp;</th>
+          <th><%= "--" %></th>
+          <th><%= select_tag("col2_filter", "",html_options={ class: "column_filter", :onchange => "filterColumn(2)", :include_blank => true}) %></th>
+          <th><%= "--" %></th>
+          <th><%= "--" %></th>
+          <th><%= "--" %></th>
+          <th><%= "--" %></th>
+          <th><%= select_tag("col7_filter", "",html_options={ class: "column_filter", :onchange => "filterColumn(7)", :include_blank => true}) %></th>
+          <th><%= "--" %></th>
+          <th><%= "--" %></th>
+          <th><%= "--" %></th>
+        </tr>
+        <tr>
+          <th>&nbsp;</th>
+          <th><%= t(:first_name) %></th>
+          <th><%= t(:last_name) %></th>
+          <th><%= t(:email) %></th>
+          <th><%= t(:id) %></th>
+          <th><%= t(:dob) %></th>     
+          <th><%= t(:company) %></th>
+          <th><%= t(:branch) %></th>
+          <th><%= t(:professional).pluralize(locale) %></th>          
+          <th><%= t(:action) %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @clients.each do |client| %>
+        
+          <tr class="<%= cycle('odd', 'even') %>">
+            <td><%= client.id %></td>
+            <td><%= client.first_name %></td>
+            <td><%= client.last_name %></td>
+            <td><%= client.email %></td>
+            <td><%= client.id_code %></td>
+            <td><%= client.dob %></td>
+            <td><%= client.company_id %></td>
+            <td><%= client.branch_id %></td>
+            <td><%= client.professionals.size %></td>
+            <td class="actions">
+              <%= link_to(t(:show), [@user, client], :class => 'action show') %>
+              <%= link_to(t(:edit), [:edit, @user, client], :class => 'action edit') %>
+              <%= link_to(t(:delete), [:delete, @user, client], :class => 'action delete') %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+<%= javascript_tag("$(document).ready( function () {$('#index_table').DataTable({responsive: true, fixedHeader: true});} );") %>
+
+<%= javascript_tag("function filterColumn ( i ) {$('#index_table').DataTable().column( i ).search( $('#col'+i+'_filter').val()).draw();}") %>
+
+<%= javascript_tag("window.onload = function(){$('#index_table').DataTable().column(7).data().unique().sort().each( function ( value ) {select = document.getElementById('col7_filter'), option = null; option = document.createElement('option');option.value = value;option.innerHTML = value;select.appendChild(option);} );$('#index_table').DataTable().column(2).data().unique().sort().each( function ( value ) {select = document.getElementById('col2_filter'), option = null; option = document.createElement('option');option.value = value;option.innerHTML = value;select.appendChild(option);} );};") %>
+
+
+
+<!--
+  options_for_select(["A","B"]),
+
+window.onload = function(){
+$('#index_table').DataTable().column(7).data().unique().sort.each( function ( value ) {
+        select = document.getElementById('col7_filter'), option = null;
+        option = document.createElement('option');
+        option.value = value;
+        option.innerHTML = value;
+        select.appendChild(option);
+    } );};
+
+window.onload = function(){
+    select = document.getElementById('col7_filter'), option = null;
+    for(var i = 0; i <= 10; i++) {
+        option = document.createElement('option');
+        option.value = i;
+        option.innerHTML = i;
+        select.appendChild(option);
+    }
+};
+-->
+</div>

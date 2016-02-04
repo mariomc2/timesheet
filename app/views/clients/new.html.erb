@@ -1,0 +1,18 @@
+<% @page_title = t(:client).pluralize(locale) %>
+
+<%= link_to("<< " + t(:return_to), [@user, params[:controller]], :class => 'back-link') %>
+
+<div class="clients new">
+  <h2><%= t(:create) + " " + t(:client) %></h2>
+
+  <%= form_for([@user, @client]) do |f| %>
+
+    <%= render(:partial => "form", :locals => {:f => f}) %>
+
+    <div class="form-buttons">
+      <%= submit_tag(t(:create) + " " + t(:client)) %>
+    </div>
+
+  <% end %>
+
+</div>

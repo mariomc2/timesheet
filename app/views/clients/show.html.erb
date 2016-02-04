@@ -1,0 +1,50 @@
+<% @page_title = t(:client).pluralize(locale) %>
+
+<%= link_to("<< " + t(:return_to), [@user, params[:controller]], :class => 'back-link') %>
+
+<div class="client show">
+  <h2><%= t(:show) + " " + t(:client) %></h2>
+
+  <div class="table-responsive">
+    <table id="show_table" class="display responsive" summary="client detail view">
+      <tbody>
+      	<tr>
+          <th><%= t(:first_name) %></th>
+          <td><%= @client.first_name %></td>
+        </tr>
+        <tr>
+          <th><%= t(:last_name) %></th>
+          <td><%= @client.last_name %></td>
+        </tr>
+        <tr>
+          <th><%= t(:id) %></th>
+          <td><%= @client.id_code %></td>
+        </tr>
+        <tr>
+          <th><%= t(:dob) %></th>
+          <td><%= @client.dob %></td>
+        </tr>
+        <tr>
+          <th><%= t(:email) %></th>
+          <td><%= @client.email %></td>
+        </tr>        
+        <tr>
+          <th><%= t(:company) %></th>
+          <td><%= @client.company_id %></td>
+        </tr>
+        <tr>
+          <th><%= t(:branch) %></th>
+          <td><%= @client.branch_id %></td>
+        </tr>
+        <tr>
+          <th><%= t(:professional).pluralize(locale) %></th>
+          <td><%= @client.professionals.size %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+<%= javascript_tag("$(document).ready( function () {$('#show_table').DataTable();} );") %>
+<%= javascript_tag("$('#show_table').DataTable( {responsive: true, paging: false} );") %>
+
+</div>
