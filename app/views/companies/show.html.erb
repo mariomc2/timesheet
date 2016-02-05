@@ -1,6 +1,7 @@
 <% @page_title = t(:company).pluralize(locale) %>
 
-<%= link_to("<< " + t(:return_to), [@user, params[:controller]], :class => 'back-link') %>
+<%= @user ? link_to("<< " + t(:return_to), [@user, params[:controller]]) : "-" %>
+<%#= link_to("<< " + t(:return_to), [@user, params[:controller]], :class => 'back-link') %>
 
 <div class="Company show">
   <h2><%= t(:show) + " " + t(:company) %></h2>
@@ -21,15 +22,15 @@
           <td><%= @company.email %></td>
         </tr>        
         <tr>
-          <th><%= t(:professional).pluralize(locale) %></th>
+          <th><%= link_to(t(:professional).pluralize(locale), [@company, :professionals]) %></th>
           <td><%= @company.professionals.size %></td>
         </tr>
         <tr>
-          <th><%= t(:branch).pluralize(locale) %></th>
+          <th><%= link_to(t(:branch).pluralize(locale), [@company, :branches]) %></th>
           <td><%= @company.branches.size %></td>
         </tr>
         <tr>
-          <th><%= t(:client).pluralize(locale) %></th>
+          <th><%= link_to(t(:client).pluralize(locale), [@company, :clients]) %></th>
           <td><%= @company.clients.size %></td>
         </tr>
         <tr>
@@ -38,11 +39,11 @@
         </tr>
         <tr>
           <th><%= t(:pass_active) %></th>
-          <td><%= status_tag(@company.pass_active) %></td>
+          <td><%= @company.pass_active %><%#= status_tag(@company.pass_active) %></td>
         </tr>
         <tr>
           <th><%= t(:acc_active) %></th>
-          <td><%= status_tag(@company.acc_active) %></td>
+          <td><%= @company.acc_active %><%#= status_tag(@company.acc_active) %></td>
         </tr>
         <tr>
           <th><%= t(:last_in) %></th>

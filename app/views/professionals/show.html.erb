@@ -1,6 +1,6 @@
 <% @page_title = t(:professional).pluralize(locale) %>
 
-<%= link_to("<< " + t(:return_to), [@user, params[:controller]], :class => 'back-link') %>
+<%= @user ? link_to("<< " + t(:return_to), [@user, params[:controller]]) : "-" %>
 
 <div class="Professionals show">
   <h2><%= t(:show) + " " + t(:professional) %></h2>
@@ -33,11 +33,11 @@
           <td><%= @professional.speciality %></td>
         </tr>
         <tr>
-          <th><%= t(:company).pluralize(locale) %></th>
+          <th><%= link_to(t(:company).pluralize(locale), [@professional, :companies]) %></th>
           <td><%= @professional.companies.size %></td>
         </tr>
         <tr>
-          <th><%= t(:client).pluralize(locale) %></th>
+          <th><%= link_to(t(:client).pluralize(locale), [@professional, :clients]) %></th>
           <td><%= @professional.clients.size %></td>
         </tr>
         <tr>
@@ -46,11 +46,11 @@
         </tr>
         <tr>
           <th><%= t(:pass_active) %></th>
-          <td><%= status_tag(@professional.pass_active) %></td>
+          <td><%= @professional.pass_active %><%#= status_tag(@professional.pass_active) %></td>
         </tr>
         <tr>
           <th><%= t(:acc_active) %></th>
-          <td><%= status_tag(@professional.acc_active) %></td>
+          <td><%= @professional.acc_active %><%#= status_tag(@professional.acc_active) %></td>
         </tr>
         <tr>
           <th><%= t(:created_at) %></th>

@@ -5,10 +5,6 @@ Rails.application.routes.draw do
   root "access#login"
   get '/:locale' => 'access#login'
   
-  scope "(:locale)", locale: /es|en/ do
-    resources :access do
-    end
-  end
 
   scope "(:locale)", locale: /es|en/ do
     resources :professionals do
@@ -44,7 +40,7 @@ Rails.application.routes.draw do
       member do
         get :delete
       end
-      resources :companies do
+      resources :professionals do
         member do
           get :delete
         end
@@ -68,7 +64,21 @@ Rails.application.routes.draw do
   
   end
 
-  
+  scope "(:locale)", locale: /es|en/ do
+    resources :access do
+      collection do
+        get :professional_new
+        post :professional_create
+        get :professional_delete
+        post :professional_destroy
+
+        get :company_new
+        post :company_create
+        get :company_delete
+        post :company_destroy
+      end
+    end
+  end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

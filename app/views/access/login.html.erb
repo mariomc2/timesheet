@@ -6,8 +6,8 @@
       <div class="text-center">
         <div >
           <ul class="nav nav-tabs nav-justified">
-            <li class="active"><a href="#new" role="tab" data-toggle="tab" class="big btn btn-primary"><i class="fa fa-user-md"></i> <%= t(:professional) %></a></li>
-            <li><a href="#user" role="tab" data-toggle="tab" class="big btn btn-danger"><i class="fa fa-hospital-o"></i> <%= t(:company) %></a></li>
+            <li class="active"><a href="#professional" role="tab" data-toggle="tab" class="big btn btn-primary"><i class="fa fa-user-md"></i> <%= t(:professional) %></a></li>
+            <li><a href="#company" role="tab" data-toggle="tab" class="big btn btn-danger"><i class="fa fa-hospital-o"></i> <%= t(:company) %></a></li>
           </ul>
         </div>
       </div>
@@ -15,7 +15,7 @@
       <p class="text-center">Click para selecionar</p>
       
       <div class="tab-content">
-        <div class="tab-pane fade in active" id="new">
+        <div class="tab-pane fade in active" id="professional">
           <br>
           <%#= form_tag(:action => "attempt_login_professional") do |f| %>
           <form action="/es/professionals">
@@ -41,9 +41,12 @@
             <%#= submit_tag("log in")%>
           </form>
           <%# end %>
+          
+            <%= render(:partial => "professionals_index", :object => @professionals) %>
+        
         </div>
 
-        <div class="tab-pane fade" id="user">
+        <div class="tab-pane fade" id="company">
           <br>
           <form action="/es/companies">
             <fieldset>
@@ -65,8 +68,11 @@
               <button class="btn btn-danger">Entrar como Clinica</button>
             </div>
           </form>
+          <%= render(:partial => "companies_index", :object => @companies) %>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+

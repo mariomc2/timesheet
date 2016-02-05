@@ -1,6 +1,9 @@
 <% @page_title = t(:company).pluralize(locale) %>
 
-<div class="professionals index">
+<div class="companies index">
+
+<%= @user ? link_to("<< " + t(:home), [@user]) : "-" %>
+<br /><br />
   
 <%= link_to(image_tag('plus_sign.png', :size => '11x11', :alt => '+') + " " +t(:add_new_company), [:new, @user, params[:controller].singularize], :class => 'action new') %>
   

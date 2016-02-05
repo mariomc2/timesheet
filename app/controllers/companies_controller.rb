@@ -28,6 +28,7 @@ class CompaniesController < ApplicationController
   def create
     # Instantiate a new object using form parameters
     @company = Company.new(company_params)
+    @company.professionals << @user
     # Save the object
     if @company.save
     # If save succeeds, redirect to the index action

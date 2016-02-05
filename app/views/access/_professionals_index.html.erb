@@ -1,0 +1,40 @@
+
+<h4>
+Login simulation. Please pick one Professional from below!
+</h4>
+
+<div class="professionals index">
+  
+<%= link_to(image_tag('plus_sign.png', :size => '11x11', :alt => '+') + " " +t(:add_new_professional), :action => "professional_new") %>
+  
+
+  <div><%= @professionals.size.to_s + " " + t(:professional).pluralize(@professionals.size, locale) + " " + t(:found) %></div>
+  
+  <div class="table-responsive">
+    <table id="index_table" class="display responsive" summary="Professional list">
+      <thead class="thead-inverse">
+        <tr>
+          <th>&nbsp;</th>          
+          <th><%= "email" %></th>          
+          <th><%= t(:delete) %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @professionals.each do |professional| %>
+        
+          <tr class="<%= cycle('odd', 'even') %>">
+            <td><%= professional.id %></td>            
+            <td><%= link_to(professional.email, [professional], :class => 'action show') %></td>
+            <td class="actions">
+              <%= link_to(t(:delete), {:action => "professional_delete", :id => professional.id}) %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+<%= javascript_tag("$(document).ready( function () {$('#index_table').DataTable();} );") %>
+<%= javascript_tag("$('#index_table').DataTable( {responsive: false, fixedHeader: true} );") %>
+
+</div>

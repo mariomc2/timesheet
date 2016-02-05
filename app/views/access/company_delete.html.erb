@@ -1,0 +1,18 @@
+<% @page_title = t(:company).pluralize(locale) %>
+
+<%= link_to("<< " + t(:return_to), :action => "login") %>
+
+<div class="company delete">
+	<h2><%= t(:delete) + " " + t(:company) %></h2>
+
+	<%= form_for(:company, :url => {:action => 'company_destroy' , :id => @company.id}) do |f| %>
+
+		<p> <%= t(:delete_message) %> </p>
+
+		<p class="reference-name"><%= @company.email %></p>
+
+		<div class="form-buttons">
+			<%= submit_tag(t(:delete) + " " + t(:company)) %>
+		</div>
+	<% end %>
+</div>

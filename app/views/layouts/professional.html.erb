@@ -26,9 +26,9 @@
         <div id="navbar" class="navbar-collapse collapse">
 
           <ul class="nav navbar-nav">
-            <li><%= link_to(t(:company).pluralize(locale), professional_companies_path(:professional_id => "1")) %></li>
-            <li><%= link_to(t(:client).pluralize(locale), professional_clients_path(:professional_id => "1")) %></li>
-            <li><%= link_to(t(:appointment).pluralize(locale), professional_appointments_path(:professional_id => "1")) %></li>
+            <li><%#= link_to(t(:company).pluralize(locale), professional_companies_path(@professional)) %></li>
+            <li><%#= link_to(t(:client).pluralize(locale), professional_clients_path(:professional_id => "1")) %></li>
+            <li><%#= link_to(t(:appointment).pluralize(locale), professional_appointments_path(:professional_id => "1")) %></li>
           </ul>  
           <ul class="nav navbar-nav navbar-right">
             <li>

@@ -1,0 +1,40 @@
+
+<h4>
+Login simulation. Please pick one Company from below!
+</h4>
+
+<div class="professionals index">
+  
+<%= link_to(image_tag('plus_sign.png', :size => '11x11', :alt => '+') + " " +t(:add_new_company), :action => "company_new") %>
+  
+
+  <div><%= @companies.size.to_s + " " + t(:company).pluralize(@companies.size, locale) + " " + t(:found) %></div>
+  
+  <div class="table-responsive">
+    <table id="index_table_c" class="display responsive" summary="Company list">
+      <thead class="thead-inverse">
+        <tr>
+          <th>&nbsp;</th>          
+          <th><%= "email" %></th> 
+          <th><%= t(:delete) %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @companies.each do |company| %>
+        
+          <tr class="<%= cycle('odd', 'even') %>">
+            <td><%= company.id %></td>            
+            <td><%= link_to(company.email, [company], :class => 'action show') %></td>            
+            <td class="actions">              
+              <%= company.acc_active ? link_to(t(:delete), {:action => "company_delete", :id => company.id}) : ":)" %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+<%= javascript_tag("$(document).ready( function () {$('#index_table_c').DataTable();} );") %>
+<%= javascript_tag("$('#index_table_c').DataTable( {responsive: true, fixedHeader: true} );") %>
+
+</div>

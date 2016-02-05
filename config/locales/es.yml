@@ -8,6 +8,7 @@ es:
   edit: Editar
   update: Actualizar
   delete: Borrar
+  register: Registrar
   professional: Profesional
   company: Clinica
   branch: Sucursal
@@ -23,6 +24,10 @@ es:
   professional_fee: Pago a Profesional
   remaining_project_payment: Saldo por Tratamiento
   add_new_professional: Agregar nuevo profesional
+  add_new_company: Agregar nueva Clinica
+  add_new_branch: Agregar nueva Sucursal
+  add_new_client: Agregar nuevo Cliente
+  add_new_appointment: Agregar nueva Cita
   first_name: Nombre
   last_name: Apellido
   email: Correo Electrónico
@@ -37,6 +42,7 @@ es:
   date_time: Fecha/Hora
   column: En Columna
   search: Buscar
+  home: Pagina Inicial
   create_success: creado satisfactoriamente
   update_success: actualizado satisfactoriamente
   delete_message: Esta seguro que desea borrar este record permanentemente?
