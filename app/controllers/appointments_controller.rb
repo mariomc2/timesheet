@@ -6,7 +6,13 @@ class AppointmentsController < ApplicationController
   before_action :find_user
 
   def index
-    @appointments = @user.appointments
+    if params[:company_id]
+      @appointments = @user.appointments.where(company_id: params[:company_id])
+    elsif params[:professional_id]
+      @appointments = @user.appointments.where(professional_id: params[:professional_id])        
+    else
+      @appointments = @user.appointments
+    end    
   end
 
   def show
@@ -20,6 +26,7 @@ class AppointmentsController < ApplicationController
   def create
     # Instantiate a new object using form parameters
     @appointment = Appointment.new(appointment_params)
+    @user.appointments << @appointment
     # Save the object
     if @appointment.save
     # If save succeeds, redirect to the index action
@@ -75,6 +82,9 @@ class AppointmentsController < ApplicationController
     def find_user
       # Take the URL to extract the resource: [Professional, Company]
       resource= request.path.split('/')[2]
+
+      @is_company = resource == "companies" ? true : false
+
       if params[resource.singularize+"_id"]
         @user = resource.singularize.classify.constantize.find(params[resource.singularize+"_id"])
       end

@@ -6,9 +6,9 @@ class CompaniesController < ApplicationController
   before_action :find_user
 
   def index
-    if @user
+    if @user # If the user is a professional
       @companies = @user.companies
-    else
+    else # If the user is companies pass the whole list ONLY for testing
       @companies = Company.all
     end
   end
@@ -84,6 +84,9 @@ class CompaniesController < ApplicationController
     def find_user
       # Take the URL to extract the resource: [Professional, Company]
       resource= request.path.split('/')[2]
+      
+      @is_company = resource == "companies" ? true : false
+          
       if params[resource.singularize+"_id"]
         @user = resource.singularize.classify.constantize.find(params[resource.singularize+"_id"])
       end

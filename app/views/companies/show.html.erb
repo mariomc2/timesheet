@@ -22,20 +22,20 @@
           <td><%= @company.email %></td>
         </tr>        
         <tr>
-          <th><%= link_to(t(:professional).pluralize(locale), [@company, :professionals]) %></th>
-          <td><%= @company.professionals.size %></td>
+          <th><%= link_to(t(:professional).pluralize(locale), @is_company ? [@company, :professionals] : [@user]) %></th>
+          <td><%= @is_company ? @company.professionals.size : "1" %></td>
         </tr>
         <tr>
-          <th><%= link_to(t(:branch).pluralize(locale), [@company, :branches]) %></th>
+          <th><%= link_to(t(:branch).pluralize(locale), @is_company ? [@company, :branches] : [@user, :branches, {:company_id => @company.id}]) %></th>
           <td><%= @company.branches.size %></td>
         </tr>
         <tr>
-          <th><%= link_to(t(:client).pluralize(locale), [@company, :clients]) %></th>
-          <td><%= @company.clients.size %></td>
+          <th><%= link_to(t(:client).pluralize(locale), @is_company ? [@company, :clients] : [@user, :clients, {:company_id => @company.id}]) %></th>
+          <td><%= @is_company ? @company.clients.size : @user.clients.select {|s| s.company_id == params[:id].to_i}.size %></td>
         </tr>
         <tr>
-          <th><%= link_to(t(:appointment).pluralize(locale), [@company, :appointments])  %></th>
-          <td><%= @company.appointments.size %></td>
+          <th><%= link_to(t(:appointment).pluralize(locale), @is_company ? [@company, :appointments] : [@user, :appointments, {:company_id => @company.id}])  %></th>
+          <td><%= @is_company ? @company.appointments.size : @user.appointments.select {|s| s.company_id == params[:id].to_i}.size %></td>
         </tr>
         <tr>
           <th><%= t(:pass_active) %></th>

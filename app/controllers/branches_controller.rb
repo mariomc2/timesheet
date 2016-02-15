@@ -5,8 +5,16 @@ class BranchesController < ApplicationController
   before_action :set_locale
   before_action :find_user
 
-  def index
-    @branches = @user.branches
+  def index    
+    if @is_company 
+      @branches = @user.branches
+    else
+      if params[:company_id]
+        @branches = Branch.where(company_id: params[:company_id])
+      else
+        redirect_to([@user, :companies])
+      end
+    end 
   end
 
   def show
@@ -14,7 +22,15 @@ class BranchesController < ApplicationController
   end
 
   def new
-    @branch = @user.branches.new()
+    if @is_company
+      @branch = @user.branches.new()
+    else
+      if params[:company_id]
+        @branch = Branch.new(company_id: params[:company_id])
+      else
+        redirect_to([@user, :companies])
+      end
+    end
   end
 
   def create
@@ -75,6 +91,9 @@ class BranchesController < ApplicationController
     def find_user
       # Take the URL to extract the resource: [Professional, Company]
       resource= request.path.split('/')[2]
+
+      @is_company = resource == "companies" ? true : false
+
       if params[resource.singularize+"_id"]
         @user = resource.singularize.classify.constantize.find(params[resource.singularize+"_id"])
       end

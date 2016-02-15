@@ -1,27 +1,24 @@
 <%= error_messages_for(@appointment) %>
 
+
 <div class="table-responsive">
   <table id="fields_table" class="display responsive" summary="Appointment form fields">
     <tbody>
       <tr>
         <th><%= f.label(:professional_id, t(:professional)) %></th>
-        <td>
-          <%= f.text_field(:professional_id) %>
-          <%#= @appointment.professional.first_name + " " + @appointment.professional.last_name %>
-          <%#= f.hidden_field(:professional_id, :value => @appointment.professional.id) %>
-        </td>
+        <td><%= @is_company ? f.collection_select(:professional_id, @user.professionals, :id, :first_name , include_blank: true) :  @appointment.professional.first_name + " " + @appointment.professional.last_name %></td>        
       </tr>
       <tr>
         <th><%= f.label(:company_id, t(:company)) %></th>
-        <td><%= f.text_field(:company_id) %></td>
+        <td><%= @is_company ? @user.name : f.collection_select(:company_id, @user.companies, :id, :name,include_blank: true) %></td>
       </tr>
       <tr>
         <th><%= f.label(:branch_id, t(:branch)) %></th>
-        <td><%= f.text_field(:branch_id) %></td>
+        <td><%= @is_company ? f.collection_select(:branch_id, @user.branches, :id, :name, include_blank: true) : f.grouped_collection_select(:branch_id, @user.companies, :branches, :name, :id, :name, include_blank: true) %></td>
       </tr>
       <tr>
         <th><%= f.label(:client_id, t(:client)) %></th>
-        <td><%= f.text_field(:client_id) %></td>
+        <td><%= @is_company ? f.collection_select(:client_id, @user.clients, :id, :first_name, include_blank: true) : f.grouped_collection_select(:client_id, @user.companies, :clients, :name, :id, :first_name, include_blank: true) %></td>
       </tr>
       <tr>
         <th><%= f.label(:shared, t(:shared)) %></th>
@@ -65,13 +62,43 @@
         <td><%= f.text_field(:remaining_project_payment) %></td>
       </tr>
     </tbody>
-  </table>
+  </table>  
 </div>
 
 
 <%= javascript_tag("$(document).ready( function () {$('#fields_table').DataTable();} );") %>
 <%= javascript_tag("$('#fields_table').DataTable( {responsive: true, paging: false} );") %>
 <%= javascript_tag("$(function () {$('#datetimepicker1').datetimepicker({locale: '" + I18n.locale.to_s + "',format: 'DD/MM/YYYY HH:mm',defaultDate: '" + @appointment.date_time.to_s + "',inline: true,sideBySide: true})});") %>
+
+<%# JS function to refresh the selectors %>
+<%= javascript_tag do %>
+window.onload = function() {
+  var clients, branches;
+  clients = $('#appointment_client_id').html();  
+  branches = $('#appointment_branch_id').html();
+  return $('#appointment_company_id').change(
+    function() {
+      var company, options_clients, options_branches;
+      company = $('#appointment_company_id :selected').text();
+      options_clients = $(clients).filter("optgroup[label='" + company + "']").html();
+      options_branches = $(branches).filter("optgroup[label='" + company + "']").html();
+      if (options_clients) {
+        $('#appointment_client_id').html(options_clients);
+      } else {
+        $('#appointment_client_id').empty();
+      }
+      if (options_branches) {
+        $('#appointment_branch_id').html(options_branches);
+      } else {
+        $('#appointment_branch_id').empty();
+      }
+      return;
+    }
+    
+  );
+
+};
+<% end %>
         
 
 

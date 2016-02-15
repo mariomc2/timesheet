@@ -17,10 +17,11 @@
       </tr>
       <tr>
         <th><%= f.label(:company_id, t(:company)) %></th>
-        <td><%= f.text_field(:company_id) %></td>
+        <td><%= @branch.company.name %></td>
       </tr>
     </tbody>
   </table>
+  <%= f.hidden_field(:company_id, :value => @branch.company_id) %>
 </div>
 
 <%= javascript_tag("$(document).ready( function () {$('#fields_table').DataTable();} );") %>

@@ -5,11 +5,11 @@
     <tbody>
       <tr>
         <th><%= f.label(:company_id, t(:company)) %></th>
-        <td><%= f.text_field(:company_id) %></td>
+        <td><%= @is_company ? @user.name : f.collection_select(:company_id, @user.companies, :id, :name,include_blank: true) %></td>
       </tr>
       <tr>
         <th><%= f.label(:branch_id, t(:branch)) %></th>
-        <td><%= f.text_field(:branch_id) %></td>
+        <td><%= @is_company ? f.collection_select(:branch_id, @user.branches, :id, :name, include_blank: true) : f.grouped_collection_select(:branch_id, @user.companies, :branches, :name, :id, :name, include_blank: true) %></td>
       </tr>
       <tr>
         <th><%= f.label(:first_name, t(:first_name)) %></th>
@@ -37,3 +37,24 @@
 
 <%= javascript_tag("$(document).ready( function () {$('#fields_table').DataTable();} );") %>
 <%= javascript_tag("$('#fields_table').DataTable( {responsive: true, paging: false} );") %>
+
+<%# JS function to refresh the selectors %>
+<%= javascript_tag do %>
+window.onload = function() {
+  var branches;  
+  branches = $('#client_branch_id').html();
+  return $('#client_company_id').change(
+    function() {
+      var company, options_branches;
+      company = $('#client_company_id :selected').text();      
+      options_branches = $(branches).filter("optgroup[label='" + company + "']").html();
+      if (options_branches) {
+        $('#client_branch_id').html(options_branches);
+      } else {
+        $('#client_branch_id').empty();
+      }
+      return;
+    }    
+  );
+};
+<% end %>

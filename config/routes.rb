@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   #match ':controller(/:action(/:id))', :via => [:get, :post]
   root "access#login"
   get '/:locale' => 'access#login'
+
   
 
   scope "(:locale)", locale: /es|en/ do

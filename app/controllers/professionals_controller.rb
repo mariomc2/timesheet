@@ -83,6 +83,9 @@ class ProfessionalsController < ApplicationController
     def find_user
       # Take the URL to extract the resource: [Professional, Company]
       resource= request.path.split('/')[2]
+
+      @is_company = resource == "companies" ? true : false
+
       if params[resource.singularize+"_id"]
         @user = resource.singularize.classify.constantize.find(params[resource.singularize+"_id"])
       end

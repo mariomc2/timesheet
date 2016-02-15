@@ -6,7 +6,13 @@ class ClientsController < ApplicationController
   before_action :find_user
 
   def index
-    @clients = @user.clients
+    if not(@is_company) && params[:company_id]
+      @clients = @user.clients.where(company_id: params[:company_id])
+    elsif @is_company && params[:professional_id]
+      @clients = @user.clients.joins(:professionals).where(professionals: {id: params[:professional_id]})
+    else
+      @clients = @user.clients
+    end    
   end
 
   def show
@@ -20,6 +26,7 @@ class ClientsController < ApplicationController
   def create
     # Instantiate a new object using form parameters
     @client = Client.new(client_params)
+    @user.clients << @client
     # Save the object
     if @client.save
     # If save succeeds, redirect to the index action
@@ -75,7 +82,10 @@ class ClientsController < ApplicationController
     def find_user
       # Take the URL to extract the resource: [Professional, Company]
       resource= request.path.split('/')[2]
-      if params[resource.singularize+"_id"]
+
+      @is_company = resource == "companies" ? true : false
+      
+      if params[resource.singularize+"_id"]        
         @user = resource.singularize.classify.constantize.find(params[resource.singularize+"_id"])
       end
     end
