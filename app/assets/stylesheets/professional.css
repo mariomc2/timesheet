@@ -1,0 +1,18 @@
+/*
+  Place all the styles related to the matching controller here.
+  They will automatically be included in application.css.
+ 
+ *= require bootstrap
+ *= require_self
+*/
+
+
+.modal-header, h4, .close {
+      background-color: #265a88;
+      color:white !important;
+      text-align: center;
+      font-size: 30px;
+  }
+  .modal-footer {
+      background-color: #f9f9f9;
+  }

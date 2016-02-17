@@ -20,6 +20,17 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
+  login: Login
+  username: Username
+  password: Password
+  enter_email: Enter e-mail
+  enter_password: Enter password
+  remember_me: Remember me
+  not_a_member: Not a member
+  sign_up: Sign Up
+  user: User
+  forgot: Forgot
+  cancel: Cancel
   found: found
   return_to: Return to list
   action: Action

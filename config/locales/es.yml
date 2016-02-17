@@ -1,5 +1,16 @@
 ---
 es:
+  login: Entrar
+  username: Usuario
+  password: Contraseña
+  enter_email: e-mail
+  enter_password: contraseña
+  remember_me: Recordarme
+  not_a_member: No eres miembro
+  sign_up: Registrarse
+  user: Usuario
+  forgot: Olvido la
+  cancel: Cancelar
   found: en lista
   return_to: Retornar a lista
   action: Acción

@@ -5,6 +5,10 @@ class ProfessionalsController < ApplicationController
   before_action :set_locale
   before_action :find_user
 
+  def login
+    
+  end
+
   def index
     if @user
       @professionals = @user.professionals
@@ -27,10 +31,18 @@ class ProfessionalsController < ApplicationController
 
   def create
     # Instantiate a new object using form parameters
-    @professional = Professional.new(professional_params)
+    professional = Professional.new(professional_params)    
     # Save the object
-    if @professional.save
-    # If save succeeds, redirect to the index action
+    if professional.save
+      
+      if not(@is_company)
+        company = professional.companies.create(default: true, name: "-")
+        branch = company.branches.create(default: true, name: "-")
+        client = branch.clients.create(default: true, company_id: company.id, dob: "1900-01-01", first_name: "-", last_name: "-")
+        professional.clients << client
+      end      
+
+      # If save succeeds, redirect to the index action
       flash[:notice] = "#{t(:professional)} #{t(:create_success)}"
       redirect_to([@user, :professionals])      
     else
@@ -77,7 +89,7 @@ class ProfessionalsController < ApplicationController
       # same as using "params[:professional]", except taht it:
       # - raises an error if :professional is not present
       # - allows listed attributes to be mass-assigned
-      params.require(:professional).permit(:first_name, :last_name, :id_code, :dob, :email, :speciality)
+      params.require(:professional).permit(:first_name, :last_name, :id_code, :dob, :email, :speciality, :default)
     end
 
     def find_user

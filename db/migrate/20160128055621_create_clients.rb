@@ -12,6 +12,8 @@ class CreateClients < ActiveRecord::Migration
 
     	t.string "photo"
 
+        t.boolean "default", :default => false
+
       t.timestamps null: false
     end
     add_index("clients", "company_id")

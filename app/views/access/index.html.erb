@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Timesheet</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <%= stylesheet_link_tag    'access', media: 'all'%>
+  <%#= javascript_include_tag 'public' %>
+  <%#= csrf_meta_tags %>
+</head>
+<body background="images/image1.jpg">
+	
+  <!-- login Container -->
+  <div class="container">
+    <div class="col-md-4 col-md-offset-4 ">
+      <div class="modal-content">
+        <div class="modal-header" style="padding:35px 50px;">          
+          <h4><span class="glyphicon glyphicon-random"></span> <%= t(:user) %></h4>
+        </div>
+        <div class="modal-body" style="padding:40px 50px;">    
+
+          <%= button_to( {controller: "professionals", action: "login"}, :class => "btn btn-primary btn-default btn-block", :method => :get ) do%>
+            <span class="glyphicon glyphicon-user"></span><%=" "+ t(:professional) %>
+          <% end %>
+          
+          <hr>
+
+          <%= button_to( {controller: "companies", action: "login"}, :class => "btn btn-success btn-block", :method => :get ) do%>
+            <span class="glyphicon glyphicon-home"></span><%=" "+ t(:company) %>
+          <% end %>
+          
+          
+          
+        </div>
+        <div class="modal-footer">
+          <h6>
+              <% if I18n.locale == I18n.default_locale %>
+                
+                <%= link_to(image_tag('gb.png', :size => '22x14', :alt => 'gb') + " English", :locale=>'en') %>
+              <% else %>
+                <%= link_to(image_tag('co.png', :size => '22x14', :alt => 'co') + " Español", :locale=>'es') %>
+              <%end%>
+          </h6>           
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</body>
+</html>

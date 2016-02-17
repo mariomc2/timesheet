@@ -11,6 +11,8 @@ class CreateCompanies < ActiveRecord::Migration
     	t.string "password_digest"
       t.datetime "last_in"
 
+      t.boolean "default", :default => false
+
       t.timestamps null: false
     end
     add_index("companies", "email")

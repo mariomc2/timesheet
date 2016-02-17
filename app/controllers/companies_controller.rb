@@ -5,6 +5,10 @@ class CompaniesController < ApplicationController
   before_action :set_locale
   before_action :find_user
 
+  def login
+
+  end
+
   def index
     if @user # If the user is a professional
       @companies = @user.companies
@@ -27,11 +31,21 @@ class CompaniesController < ApplicationController
 
   def create
     # Instantiate a new object using form parameters
-    @company = Company.new(company_params)
-    @company.professionals << @user
+    company = Company.new(company_params)
     # Save the object
-    if @company.save
-    # If save succeeds, redirect to the index action
+    if company.save
+      
+      branch = company.branches.create(default: true, name: "-")
+      client = branch.clients.create(default: true, company_id: company.id, dob: "1900-01-01", first_name: "-", last_name: "-")
+      if @is_company
+        professional = company.professionals.create(default: true, dob: "1900-01-01", first_name: "-", last_name: "-")
+        professional.clients << client
+      else
+        company.professionals << @user
+        @user.clients << client
+      end
+
+      # If save succeeds, redirect to the index action     
       flash[:notice] = "#{t(:company)} #{t(:create_success)}"
       redirect_to([@user, :companies])      
     else
@@ -78,7 +92,7 @@ class CompaniesController < ApplicationController
       # same as using "params[:company]", except taht it:
       # - raises an error if :company is not present
       # - allows listed attributes to be mass-assigned
-      params.require(:company).permit(:name, :id_code, :email)
+      params.require(:company).permit(:name, :id_code, :email, :default)
     end
 
     def find_user

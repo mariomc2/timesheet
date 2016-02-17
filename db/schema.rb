@@ -48,6 +48,7 @@ ActiveRecord::Schema.define(version: 20160128055713) do
     t.boolean  "acc_active",                  default: false
     t.string   "password_digest", limit: 255
     t.datetime "last_in"
+    t.boolean  "default",                     default: false
     t.datetime "created_at",                                  null: false
     t.datetime "updated_at",                                  null: false
   end
@@ -59,13 +60,14 @@ ActiveRecord::Schema.define(version: 20160128055713) do
     t.integer  "company_id", limit: 4
     t.integer  "branch_id",  limit: 4
     t.string   "id_code",    limit: 25
-    t.string   "first_name", limit: 50,                null: false
-    t.string   "last_name",  limit: 50,                null: false
-    t.date     "dob",                                  null: false
+    t.string   "first_name", limit: 50,                  null: false
+    t.string   "last_name",  limit: 50,                  null: false
+    t.date     "dob",                                    null: false
     t.string   "email",      limit: 255, default: "@"
     t.string   "photo",      limit: 255
-    t.datetime "created_at",                           null: false
-    t.datetime "updated_at",                           null: false
+    t.boolean  "default",                default: false
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
   end
 
   add_index "clients", ["branch_id"], name: "index_clients_on_branch_id", using: :btree
@@ -90,6 +92,7 @@ ActiveRecord::Schema.define(version: 20160128055713) do
     t.boolean  "acc_active",                  default: false
     t.string   "password_digest", limit: 255
     t.datetime "last_in"
+    t.boolean  "default",                     default: false
     t.datetime "created_at",                                  null: false
     t.datetime "updated_at",                                  null: false
   end
@@ -140,6 +143,7 @@ ActiveRecord::Schema.define(version: 20160128055713) do
     t.boolean  "acc_active",                  default: false
     t.string   "password_digest", limit: 255
     t.datetime "last_in"
+    t.boolean  "default",                     default: false
     t.datetime "created_at",                                  null: false
     t.datetime "updated_at",                                  null: false
   end

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Timesheet</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <%= stylesheet_link_tag    'professional', media: 'all'%>
+  <%#= javascript_include_tag 'public' %>
+  <%#= csrf_meta_tags %>
+</head>
+<body>
+	
+  
+<!-- login Container -->
+  <div class="container">
+    <div class="col-md-4 col-md-offset-4 ">
+      <div class="modal-content">
+        <div class="modal-header" style="padding:35px 50px;">          
+          <h4><span class="glyphicon glyphicon-lock"></span> <%= t(:professional)%></h4>
+        </div>
+        <div class="modal-body" style="padding:40px 50px;">
+          
+            <div class="form-group">
+              <label for="usrname"><span class="glyphicon glyphicon-user"></span> <%= t(:professional) %></label>
+              <input type="text" class="form-control" id="usrname" placeholder="<%= t(:enter_email) %>">
+            </div>
+            <div class="form-group">
+              <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> <%= t(:password) %></label>
+              <input type="text" class="form-control" id="psw" placeholder="<%= t(:enter_password) %>">
+            </div>
+            <div class="checkbox">
+              <label><input type="checkbox" value="" checked><%= t(:remember_me) %></label>
+            </div>
+              
+              <%= button_to( {controller: "professionals", action: "index"}, :class => "btn btn-primary btn-block", :method => :get ) do%>
+              <span class="glyphicon glyphicon-off"></span><%=" "+ t(:login) %>
+            <% end %>
+
+        </div>
+        <div class="modal-footer">          
+          <h6 class="text-right"><%= t(:not_a_member) %>? <a href="#"><%= t(:sign_up) %></a></h6>
+          <h6 class="text-right"><%= t(:forgot) %> <a href="#"><%= t(:password) %>?</a></h6>
+          
+          <%= button_to( {controller: "access", action: "index"}, :class => "btn btn-danger btn-default pull-left", :method => :get ) do%>
+            <span class="glyphicon glyphicon-remove"></span><%=" "+ t(:cancel) %>
+          <% end %>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</body>
+</html>

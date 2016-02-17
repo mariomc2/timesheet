@@ -1,13 +1,13 @@
 class AccessController < ApplicationController
   
-  layout "application"
+  layout false
 
   before_action :set_locale
 
   def index
-    @professionals = Professional.all
-    @companies = Company.all
-    render('login')
+    # @professionals = Professional.all
+    # @companies = Company.all
+    # render('login')
   end
 
   
