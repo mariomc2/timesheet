@@ -6,6 +6,10 @@
  *= require_self
 */
 
+body{
+  background-image:url("image1.jpg");
+  background-size:cover;
+}
 
 .modal-header, h4, .close {
       background-color: #419641;

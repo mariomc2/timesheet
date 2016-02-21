@@ -85,7 +85,7 @@ class BranchesController < ApplicationController
       # same as using "params[:professional]", except taht it:
       # - raises an error if :professional is not present
       # - allows listed attributes to be mass-assigned
-      params.require(:branch).permit(:company_id, :name, :id_code, :email)
+      params.require(:branch).permit(:company_id, :name, :id_code, :email, :time_zone)
     end
 
     def find_user

@@ -1,7 +1,11 @@
 class CreateProfessionals < ActiveRecord::Migration
   def change
     create_table :professionals do |t|
-			t.string "id_code", :limit => 25
+        # Token to identify a register, not unique as it links instance for different users
+        t.string "id_token", :null => false
+
+		t.string "id_code", :limit => 25
+
     	t.string "first_name", :limit => 50, :null => false
     	t.string "last_name", :limit => 50, :null => false
     	t.date "dob", :null => false
@@ -17,9 +21,10 @@ class CreateProfessionals < ActiveRecord::Migration
 
         t.boolean "default", :default => false
 
+      t.string "time_zone"
       t.timestamps null: false
     end
     add_index("professionals", "dob")
-    add_index("professionals", "email")
+    add_index("professionals", ["id_token","email"])
   end
 end

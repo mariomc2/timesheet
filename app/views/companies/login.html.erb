@@ -35,7 +35,15 @@
             <% end %>
           
         </div>
-        <div class="modal-footer">          
+        <div class="modal-footer">
+          <h6>
+              <% if I18n.locale == I18n.default_locale %>
+                
+                <%= link_to(image_tag('gb.png', :size => '22x14', :alt => 'gb') + " English", :locale=>'en') %>
+              <% else %>
+                <%= link_to(image_tag('co.png', :size => '22x14', :alt => 'co') + " Español", :locale=>'es') %>
+              <%end%>
+          </h6>        
           <h6 class="text-right"><%= t(:not_a_member) %>? <a href="#"><%= t(:sign_up) %></a></h6>
           <h6 class="text-right"><%= t(:forgot) %> <a href="#"><%= t(:password) %>?</a></h6>
 

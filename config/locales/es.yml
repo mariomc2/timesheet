@@ -51,6 +51,7 @@ es:
   updated_at: Actualizado
   last_in: Ultima Entrada
   date_time: Fecha/Hora
+  time_zone: Zona Horaria
   column: En Columna
   search: Buscar
   home: Pagina Inicial
@@ -60,6 +61,8 @@ es:
   destroy_success: borrado satisfactoriamente
   save_error: impidió que se pudieran guardar los datos
   field_prob: Existen problemas con los siguientes campos
+  create_unsuccess: no puede ser creado por el momento. Por favor trate mas tarde.
+  uniqueness_unsuccess: Se alcanzo el limite maximo de intentos. No se puede crear un identificador único.
   will_paginate:
     previous_label: "&#8592; Anterior"
     next_label: "Siguiente &#8594;"

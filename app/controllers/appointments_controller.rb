@@ -76,7 +76,7 @@ class AppointmentsController < ApplicationController
       # same as using "params[:appointment]", except taht it:
       # - raises an error if :appointment is not present
       # - allows listed attributes to be mass-assigned
-      params.require(:appointment).permit(:company_id, :branch_id, :professional_id, :client_id, :shared, :needs_folloup, :date_time, :status, :task_type, :task_note, :total_project_price, :task_payment, :professional_fee, :remaining_project_payment)
+      params.require(:appointment).permit(:company_id, :branch_id, :professional_id, :client_id, :shared, :needs_folloup, :date_time, :status, :task_type, :task_note, :total_project_price, :task_payment, :professional_fee, :remaining_project_payment, :time_zone)
     end
 
     def find_user

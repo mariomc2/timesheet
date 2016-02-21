@@ -14,6 +14,7 @@
 ActiveRecord::Schema.define(version: 20160128055713) do
 
   create_table "appointments", force: :cascade do |t|
+    t.string   "id_token",                  limit: 255,                   null: false
     t.integer  "company_id",                limit: 4
     t.integer  "branch_id",                 limit: 4
     t.integer  "professional_id",           limit: 4
@@ -29,6 +30,7 @@ ActiveRecord::Schema.define(version: 20160128055713) do
     t.float    "professional_fee",          limit: 24
     t.float    "remaining_project_payment", limit: 24
     t.boolean  "needs_folloup",                           default: false
+    t.string   "time_zone",                 limit: 255
     t.datetime "created_at",                                              null: false
     t.datetime "updated_at",                                              null: false
   end
@@ -36,10 +38,11 @@ ActiveRecord::Schema.define(version: 20160128055713) do
   add_index "appointments", ["branch_id"], name: "index_appointments_on_branch_id", using: :btree
   add_index "appointments", ["client_id"], name: "index_appointments_on_client_id", using: :btree
   add_index "appointments", ["company_id"], name: "index_appointments_on_company_id", using: :btree
-  add_index "appointments", ["date_time"], name: "index_appointments_on_date_time", using: :btree
+  add_index "appointments", ["id_token", "date_time"], name: "index_appointments_on_id_token_and_date_time", using: :btree
   add_index "appointments", ["professional_id"], name: "index_appointments_on_professional_id", using: :btree
 
   create_table "branches", force: :cascade do |t|
+    t.string   "id_token",        limit: 255,                 null: false
     t.integer  "company_id",      limit: 4
     t.string   "id_code",         limit: 25
     t.string   "name",            limit: 50,                  null: false
@@ -49,14 +52,16 @@ ActiveRecord::Schema.define(version: 20160128055713) do
     t.string   "password_digest", limit: 255
     t.datetime "last_in"
     t.boolean  "default",                     default: false
+    t.string   "time_zone",       limit: 255
     t.datetime "created_at",                                  null: false
     t.datetime "updated_at",                                  null: false
   end
 
   add_index "branches", ["company_id"], name: "index_branches_on_company_id", using: :btree
-  add_index "branches", ["email"], name: "index_branches_on_email", using: :btree
+  add_index "branches", ["id_token", "email"], name: "index_branches_on_id_token_and_email", using: :btree
 
   create_table "clients", force: :cascade do |t|
+    t.string   "id_token",   limit: 255,                 null: false
     t.integer  "company_id", limit: 4
     t.integer  "branch_id",  limit: 4
     t.string   "id_code",    limit: 25
@@ -73,8 +78,8 @@ ActiveRecord::Schema.define(version: 20160128055713) do
   add_index "clients", ["branch_id"], name: "index_clients_on_branch_id", using: :btree
   add_index "clients", ["company_id"], name: "index_clients_on_company_id", using: :btree
   add_index "clients", ["dob"], name: "index_clients_on_dob", using: :btree
-  add_index "clients", ["email"], name: "index_clients_on_email", using: :btree
   add_index "clients", ["first_name"], name: "index_clients_on_first_name", using: :btree
+  add_index "clients", ["id_token", "email"], name: "index_clients_on_id_token_and_email", using: :btree
   add_index "clients", ["last_name"], name: "index_clients_on_last_name", using: :btree
 
   create_table "clients_professionals", id: false, force: :cascade do |t|
@@ -85,6 +90,7 @@ ActiveRecord::Schema.define(version: 20160128055713) do
   add_index "clients_professionals", ["client_id", "professional_id"], name: "index_clients_professionals_on_client_id_and_professional_id", using: :btree
 
   create_table "companies", force: :cascade do |t|
+    t.string   "id_token",        limit: 255,                 null: false
     t.string   "id_code",         limit: 25
     t.string   "name",            limit: 50,                  null: false
     t.string   "email",           limit: 255, default: "@",   null: false
@@ -93,11 +99,12 @@ ActiveRecord::Schema.define(version: 20160128055713) do
     t.string   "password_digest", limit: 255
     t.datetime "last_in"
     t.boolean  "default",                     default: false
+    t.string   "time_zone",       limit: 255
     t.datetime "created_at",                                  null: false
     t.datetime "updated_at",                                  null: false
   end
 
-  add_index "companies", ["email"], name: "index_companies_on_email", using: :btree
+  add_index "companies", ["id_token", "email"], name: "index_companies_on_id_token_and_email", using: :btree
 
   create_table "contact_details", force: :cascade do |t|
     t.integer  "company_id",      limit: 4
@@ -133,6 +140,7 @@ ActiveRecord::Schema.define(version: 20160128055713) do
   add_index "employments", ["company_id", "professional_id"], name: "index_employments_on_company_id_and_professional_id", using: :btree
 
   create_table "professionals", force: :cascade do |t|
+    t.string   "id_token",        limit: 255,                 null: false
     t.string   "id_code",         limit: 25
     t.string   "first_name",      limit: 50,                  null: false
     t.string   "last_name",       limit: 50,                  null: false
@@ -144,11 +152,12 @@ ActiveRecord::Schema.define(version: 20160128055713) do
     t.string   "password_digest", limit: 255
     t.datetime "last_in"
     t.boolean  "default",                     default: false
+    t.string   "time_zone",       limit: 255
     t.datetime "created_at",                                  null: false
     t.datetime "updated_at",                                  null: false
   end
 
   add_index "professionals", ["dob"], name: "index_professionals_on_dob", using: :btree
-  add_index "professionals", ["email"], name: "index_professionals_on_email", using: :btree
+  add_index "professionals", ["id_token", "email"], name: "index_professionals_on_id_token_and_email", using: :btree
 
 end

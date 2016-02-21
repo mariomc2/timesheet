@@ -14,8 +14,13 @@
       <tr>
         <th><%= f.label(:email, t(:email)) %></th>
         <td><%= f.text_field(:email) %></td>
-      </tr>      
+      </tr>
+      <tr>
+        <th><%= f.label(:time_zone, t(:time_zone)) %></th>
+        <td><%= f.time_zone_select(:time_zone, [ActiveSupport::TimeZone["London"], ActiveSupport::TimeZone["Bogota"],ActiveSupport::TimeZone["Mexico City"]], default: "Bogota") %></td>
+      </tr>    
     </tbody>
+    <%= f.hidden_field(:id_token, :value => @company.id_token) %>
   </table>
 </div>
 

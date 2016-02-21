@@ -1,7 +1,10 @@
 class CreateCompanies < ActiveRecord::Migration
   def change
     create_table :companies do |t|
-    	t.string "id_code", :limit => 25
+      # Token to identify a register, not unique as it links instance for different users
+      t.string "id_token", :null => false
+
+    	t.string "id_code", :limit => 25      
     	t.string "name", :limit => 50, :null => false
     	t.string "email", :default => "@", :null => false
     	
@@ -12,9 +15,10 @@ class CreateCompanies < ActiveRecord::Migration
       t.datetime "last_in"
 
       t.boolean "default", :default => false
-
+      
+      t.string "time_zone"
       t.timestamps null: false
     end
-    add_index("companies", "email")
+    add_index("companies", ["id_token","email"])
   end
 end

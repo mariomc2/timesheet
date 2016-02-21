@@ -17,6 +17,11 @@
       background-color: #f9f9f9;
   }
 
+body{
+  background-image:url("image1.jpg");
+  background-size:cover;
+}
+
 
  /*DELETE AFTER THIS*/ 
 

@@ -6,7 +6,7 @@ class ProfessionalsController < ApplicationController
   before_action :find_user
 
   def login
-    
+    render layout: false
   end
 
   def index
@@ -31,7 +31,8 @@ class ProfessionalsController < ApplicationController
 
   def create
     # Instantiate a new object using form parameters
-    professional = Professional.new(professional_params)    
+    professional = Professional.new(professional_params)
+      
     # Save the object
     if professional.save
       
@@ -89,7 +90,7 @@ class ProfessionalsController < ApplicationController
       # same as using "params[:professional]", except taht it:
       # - raises an error if :professional is not present
       # - allows listed attributes to be mass-assigned
-      params.require(:professional).permit(:first_name, :last_name, :id_code, :dob, :email, :speciality, :default)
+      params.require(:professional).permit(:id_token, :first_name, :last_name, :id_code, :dob, :email, :speciality, :default, :time_zone)
     end
 
     def find_user
