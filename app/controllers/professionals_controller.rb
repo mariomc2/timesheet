@@ -3,15 +3,15 @@ class ProfessionalsController < ApplicationController
   layout "professional"
 
   before_action :set_locale
-  before_action :find_user
+  before_action :current_user
 
   def login
     render layout: false
   end
 
   def index
-    if @user
-      @professionals = @user.professionals
+    if @current_user
+      @professionals = @current_user.professionals
     else
       @professionals = Professional.all
     end
@@ -22,8 +22,8 @@ class ProfessionalsController < ApplicationController
   end
 
   def new
-    if @user
-      @professional = @user.professionals.new
+    if @current_user
+      @professional = @current_user.professionals.new
     else
       @professional = Professional.new
     end    
@@ -45,7 +45,7 @@ class ProfessionalsController < ApplicationController
 
       # If save succeeds, redirect to the index action
       flash[:notice] = "#{t(:professional)} #{t(:create_success)}"
-      redirect_to([@user, :professionals])      
+      redirect_to([@current_user, :professionals])      
     else
     # If save fails, redisplay the from so user can fix problems
       render('new')
@@ -63,7 +63,7 @@ class ProfessionalsController < ApplicationController
     if @professional.update_attributes(professional_params)
       # If update succeeds, redirect to the index action
       flash[:notice] = "#{t(:professional)} #{t(:update_success)}"
-      redirect_to([@user, @professional])
+      redirect_to([@current_user, @professional])
     else
       # If save fails, redisplay the from so user can fix problems
       render('edit')
@@ -77,7 +77,7 @@ class ProfessionalsController < ApplicationController
   def destroy
     professional = Professional.find(params[:id]).destroy
     flash[:notice] = "#{t(:professional)} '#{professional.email}' #{t(:destroy_success)}"
-    redirect_to([@user, :professionals])
+    redirect_to([@current_user, :professionals])
   end
 
   private
@@ -91,16 +91,5 @@ class ProfessionalsController < ApplicationController
       # - raises an error if :professional is not present
       # - allows listed attributes to be mass-assigned
       params.require(:professional).permit(:id_token, :first_name, :last_name, :id_code, :dob, :email, :speciality, :default, :time_zone)
-    end
-
-    def find_user
-      # Take the URL to extract the resource: [Professional, Company]
-      resource= request.path.split('/')[2]
-
-      @is_company = resource == "companies" ? true : false
-
-      if params[resource.singularize+"_id"]
-        @user = resource.singularize.classify.constantize.find(params[resource.singularize+"_id"])
-      end
     end
 end

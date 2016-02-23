@@ -2,8 +2,8 @@ class CompaniesController < ApplicationController
   
   layout "professional"
 
-  before_action :set_locale
-  before_action :find_user
+  before_action :set_locale  
+  before_action :current_user
 
   def login
     render layout: false
@@ -11,7 +11,7 @@ class CompaniesController < ApplicationController
 
   def index
     if !@is_company # If the user is a professional
-      @companies = @user.companies
+      @companies = @current_user.companies
     else # If the user is companies pass the whole list ONLY for testing
       @companies = Company.all
     end
@@ -24,13 +24,13 @@ class CompaniesController < ApplicationController
   def new
     begin
       if !@is_company # If the user is a professional and is creating a new virtual company
-        @company = @user.companies.new
+        @company = @current_user.companies.new
       else
         @company = Company.new
       end # kicks in when registering a new Company
     rescue Exception => e # Catch exceptions 
       flash[:notice] = e.to_s
-      redirect_to([@user, :companies])
+      redirect_to([@current_user, :companies])
     end
   end
 
@@ -48,13 +48,13 @@ class CompaniesController < ApplicationController
           professional = company.professionals.create(default: true, dob: "1900-01-01", first_name: "-", last_name: "-")
           professional.clients << client
         else # If user is already a professional just make the proper associations to the new virtual company 
-          company.professionals << @user
-          @user.clients << client
+          company.professionals << @current_user
+          @current_user.clients << client
         end
 
         # If save succeeds, redirect to the index action     
         flash[:notice] = "#{t(:company)} #{t(:create_success)}"
-        redirect_to([@user, :companies])      
+        redirect_to([@current_user, :companies])      
       rescue Exception => e # Catch exceptions if it can't create the children of a company
         # If there is an exception delete the objects created and redirect to index
         company.destroy
@@ -63,7 +63,7 @@ class CompaniesController < ApplicationController
         if professional then professional.destroy end
 
         flash[:notice] = "#{t(:company)}->" + e.to_s
-        redirect_to([@user, :companies])
+        redirect_to([@current_user, :companies])
       end
     else
     # If save fails, redisplay the from so user can fix problems
@@ -82,7 +82,7 @@ class CompaniesController < ApplicationController
     if @company.update_attributes(company_params)
       # If update succeeds, redirect to the index action
       flash[:notice] = "#{t(:company)} #{t(:update_success)}"
-      redirect_to([@user, @company])
+      redirect_to([@current_user, @company])
     else
       # If save fails, redisplay the from so user can fix problems
       render('edit')
@@ -96,7 +96,7 @@ class CompaniesController < ApplicationController
   def destroy
     company = Company.find(params[:id]).destroy
     flash[:notice] = "#{t(:company)} '#{company.email}' #{t(:destroy_success)}"
-    redirect_to([@user, :companies])
+    redirect_to([@current_user, :companies])
   end
 
   private
@@ -110,16 +110,5 @@ class CompaniesController < ApplicationController
       # - raises an error if :company is not present
       # - allows listed attributes to be mass-assigned
       params.require(:company).permit(:id_token, :name, :id_code, :email, :default, :time_zone)
-    end
-
-    def find_user
-      # Take the URL to extract the resource: [Professional, Company]
-      resource= request.path.split('/')[2]
-      
-      @is_company = resource == "companies" ? true : false
-          
-      if params[resource.singularize+"_id"]
-        @user = resource.singularize.classify.constantize.find(params[resource.singularize+"_id"])
-      end
     end
 end

@@ -3,16 +3,16 @@ class BranchesController < ApplicationController
   layout "professional"
 
   before_action :set_locale
-  before_action :find_user
+  before_action :current_user
 
   def index    
     if @is_company 
-      @branches = @user.branches
+      @branches = @current_user.branches
     else
       if params[:company_id]
         @branches = Branch.where(company_id: params[:company_id])
       else
-        redirect_to([@user, :companies])
+        redirect_to([@current_user, :companies])
       end
     end 
   end
@@ -23,12 +23,12 @@ class BranchesController < ApplicationController
 
   def new
     if @is_company
-      @branch = @user.branches.new()
+      @branch = @current_user.branches.new()
     else
       if params[:company_id]
         @branch = Branch.new(company_id: params[:company_id])
       else
-        redirect_to([@user, :companies])
+        redirect_to([@current_user, :companies])
       end
     end
   end
@@ -40,7 +40,7 @@ class BranchesController < ApplicationController
     if @branch.save
     # If save succeeds, redirect to the index action
       flash[:notice] = "#{t(:branch)} #{t(:create_success)}"
-      redirect_to([@user, :branches])
+      redirect_to([@current_user, :branches])
     else
     # If save fails, redisplay the from so user can fix problems
       render('new')
@@ -58,7 +58,7 @@ class BranchesController < ApplicationController
     if @branch.update_attributes(branch_params)
       # If update succeeds, redirect to the index action
       flash[:notice] = "#{t(:branch)} #{t(:update_success)}"
-      redirect_to([@user, @branch])
+      redirect_to([@current_user, @branch])
     else
       # If save fails, redisplay the from so user can fix problems
       render('edit')
@@ -72,7 +72,7 @@ class BranchesController < ApplicationController
   def destroy
     branch = Branch.find(params[:id]).destroy
     flash[:notice] = "#{t(:branch)} '#{branch.name}' #{t(:destroy_success)}"
-    redirect_to([@user, :branches])
+    redirect_to([@current_user, :branches])
   end
 
   private
@@ -86,16 +86,5 @@ class BranchesController < ApplicationController
       # - raises an error if :professional is not present
       # - allows listed attributes to be mass-assigned
       params.require(:branch).permit(:company_id, :name, :id_code, :email, :time_zone)
-    end
-
-    def find_user
-      # Take the URL to extract the resource: [Professional, Company]
-      resource= request.path.split('/')[2]
-
-      @is_company = resource == "companies" ? true : false
-
-      if params[resource.singularize+"_id"]
-        @user = resource.singularize.classify.constantize.find(params[resource.singularize+"_id"])
-      end
     end
 end

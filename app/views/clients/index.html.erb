@@ -2,10 +2,10 @@
 
 <div class="clients index">
   
-<%= @user ? link_to("<< " + t(:home), [@user]) : "-" %>
+<%= @current_user ? link_to("<< " + t(:home), [@current_user]) : "-" %>
 <br /><br />
   
-<%= link_to(image_tag('plus_sign.png', :size => '11x11', :alt => '+') + " " +t(:add_new_client), [:new, @user, params[:controller].singularize], :class => 'action new') %>
+<%= link_to(image_tag('plus_sign.png', :size => '11x11', :alt => '+') + " " +t(:add_new_client), [:new, @current_user, params[:controller].singularize], :class => 'action new') %>
 
     
   <div><%= @clients.size.to_s + " " + t(:client).pluralize(@clients.size, locale) + " " + t(:found) %></div>
@@ -55,9 +55,9 @@
             <td><%= client.branch_id %></td>
             <td><%= client.professionals.size %></td>
             <td class="actions">
-              <%= link_to(t(:show), [@user, client], :class => 'action show') %>
-              <%= link_to(t(:edit), [:edit, @user, client], :class => 'action edit') %>
-              <%= link_to(t(:delete), [:delete, @user, client], :class => 'action delete') %>
+              <%= link_to(t(:show), [@current_user, client], :class => 'action show') %>
+              <%= link_to(t(:edit), [:edit, @current_user, client], :class => 'action edit') %>
+              <%= link_to(t(:delete), [:delete, @current_user, client], :class => 'action delete') %>
             </td>
           </tr>
         <% end %>

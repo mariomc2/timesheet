@@ -1,6 +1,6 @@
 <% @page_title = t(:client).pluralize(locale) %>
 
-<%= link_to("<< " + t(:return_to), [@user, params[:controller]], :class => 'back-link') %>
+<%= link_to("<< " + t(:return_to), [@current_user, params[:controller]], :class => 'back-link') %>
 
 <div class="client show">
   <h2><%= t(:show) + " " + t(:client) %></h2>

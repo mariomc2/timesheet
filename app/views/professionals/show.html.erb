@@ -1,6 +1,6 @@
 <% @page_title = t(:professional).pluralize(locale) %>
 
-<%= @user ? link_to("<< " + t(:return_to), [@user, params[:controller]]) : "-" %>
+<%= @current_user ? link_to("<< " + t(:return_to), [@current_user, params[:controller]]) : "-" %>
 
 <div class="Professionals show">
   <h2><%= t(:show) + " " + t(:professional) %></h2>
@@ -33,16 +33,16 @@
           <td><%= @professional.speciality %></td>
         </tr>
         <tr>
-          <th><%= link_to(t(:company).pluralize(locale), @is_company ? [@user] : [@professional, :companies]) %></th>
+          <th><%= link_to(t(:company).pluralize(locale), @is_company ? [@current_user] : [@professional, :companies]) %></th>
           <td><%= @is_company ? "1" : @professional.companies.size %></td>
         </tr>
         <tr>
-          <th><%= link_to(t(:client).pluralize(locale), @is_company ? [@user, :clients, {:professional_id => @professional.id}] : [@professional, :clients]) %></th>
-          <td><%= @is_company ? @professional.clients.select {|s| s.company_id == @user.id}.size : @professional.clients.size %></td>
+          <th><%= link_to(t(:client).pluralize(locale), @is_company ? [@current_user, :clients, {:professional_id => @professional.id}] : [@professional, :clients]) %></th>
+          <td><%= @is_company ? @professional.clients.select {|s| s.company_id == @current_user.id}.size : @professional.clients.size %></td>
         </tr>
         <tr>
-          <th><%= link_to(t(:appointment).pluralize(locale), @is_company ? [@user, :appointments, {:professional_id => @professional.id}] : [@professional, :appointments])  %></th>
-          <td><%= @is_company ? @user.appointments.select {|s| s.professional_id == params[:id].to_i}.size : @professional.appointments.size %></td>
+          <th><%= link_to(t(:appointment).pluralize(locale), @is_company ? [@current_user, :appointments, {:professional_id => @professional.id}] : [@professional, :appointments])  %></th>
+          <td><%= @is_company ? @current_user.appointments.select {|s| s.professional_id == params[:id].to_i}.size : @professional.appointments.size %></td>
         </tr>
         <tr>
           <th><%= t(:pass_active) %></th>

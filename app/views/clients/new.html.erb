@@ -1,11 +1,11 @@
 <% @page_title = t(:client).pluralize(locale) %>
 
-<%= link_to("<< " + t(:return_to), [@user, params[:controller]], :class => 'back-link') %>
+<%= link_to("<< " + t(:return_to), [@current_user, params[:controller]], :class => 'back-link') %>
 
 <div class="clients new">
   <h2><%= t(:create) + " " + t(:client) %></h2>
 
-  <%= form_for([@user, @client]) do |f| %>
+  <%= form_for([@current_user, @client]) do |f| %>
 
     <%= render(:partial => "form", :locals => {:f => f}) %>
 

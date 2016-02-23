@@ -1,11 +1,11 @@
 <% @page_title = t(:professional).pluralize(locale) %>
 
-<%= link_to("<< " + t(:return_to), [@user, params[:controller]], :class => 'back-link') %>
+<%= link_to("<< " + t(:return_to), [@current_user, params[:controller]], :class => 'back-link') %>
 
 <div class="professionals edit">
   <h2><%= t(:update) + " " + t(:professional) %></h2>
 
-  <%= form_for([@user, @professional]) do |f| %>
+  <%= form_for([@current_user, @professional]) do |f| %>
 
     <%= render(:partial => "form", :locals => {:f => f}) %>
 

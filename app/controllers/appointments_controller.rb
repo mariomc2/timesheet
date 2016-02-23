@@ -3,15 +3,15 @@ class AppointmentsController < ApplicationController
   layout "professional"
 
   before_action :set_locale
-  before_action :find_user
+  before_action :current_user
 
   def index
     if params[:company_id]
-      @appointments = @user.appointments.where(company_id: params[:company_id])
+      @appointments = @current_user.appointments.where(company_id: params[:company_id])
     elsif params[:professional_id]
-      @appointments = @user.appointments.where(professional_id: params[:professional_id])        
+      @appointments = @current_user.appointments.where(professional_id: params[:professional_id])        
     else
-      @appointments = @user.appointments
+      @appointments = @current_user.appointments
     end    
   end
 
@@ -20,18 +20,18 @@ class AppointmentsController < ApplicationController
   end
 
   def new
-    @appointment = @user.appointments.new({:date_time => Time.now})
+    @appointment = @current_user.appointments.new({:date_time => Time.zone.now})
   end
 
   def create
     # Instantiate a new object using form parameters
     @appointment = Appointment.new(appointment_params)
-    @user.appointments << @appointment
+    @current_user.appointments << @appointment
     # Save the object
     if @appointment.save
     # If save succeeds, redirect to the index action
       flash[:notice] = "#{t(:appointment)} #{t(:create_success)}"
-      redirect_to([@user, :appointments])
+      redirect_to([@current_user, :appointments])
     else
     # If save fails, redisplay the from so user can fix problems
       render('new')
@@ -49,7 +49,7 @@ class AppointmentsController < ApplicationController
     if @appointment.update_attributes(appointment_params)
       # If update succeeds, redirect to the index action
       flash[:notice] = "#{t(:appointment)} #{t(:update_success)}"
-      redirect_to([@user, @appointment])
+      redirect_to([@current_user, @appointment])
     else
       # If save fails, redisplay the from so user can fix problems
       render('edit')
@@ -63,7 +63,7 @@ class AppointmentsController < ApplicationController
   def destroy
     appointment = Appointment.find(params[:id]).destroy
     flash[:notice] = "#{t(:appointment)} '#{appointment.date_time}' #{t(:destroy_success)}"
-    redirect_to([@user, :appointments])
+    redirect_to([@current_user, :appointments])
   end
 
   private
@@ -77,16 +77,5 @@ class AppointmentsController < ApplicationController
       # - raises an error if :appointment is not present
       # - allows listed attributes to be mass-assigned
       params.require(:appointment).permit(:company_id, :branch_id, :professional_id, :client_id, :shared, :needs_folloup, :date_time, :status, :task_type, :task_note, :total_project_price, :task_payment, :professional_fee, :remaining_project_payment, :time_zone)
-    end
-
-    def find_user
-      # Take the URL to extract the resource: [Professional, Company]
-      resource= request.path.split('/')[2]
-
-      @is_company = resource == "companies" ? true : false
-
-      if params[resource.singularize+"_id"]
-        @user = resource.singularize.classify.constantize.find(params[resource.singularize+"_id"])
-      end
     end
 end

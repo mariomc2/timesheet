@@ -1,11 +1,11 @@
 <% @page_title = t(:client).pluralize(locale) %>
 
-<%= link_to("<< " + t(:return_to), [@user, params[:controller]], :class => 'back-link') %>
+<%= link_to("<< " + t(:return_to), [@current_user, params[:controller]], :class => 'back-link') %>
 
 <div class="client delete">
 	<h2><%= t(:delete) + " " + t(:client) %></h2>
 
-	<%= form_for([@user, @client], :html => {:method => :delete}) do |f| %>
+	<%= form_for([@current_user, @client], :html => {:method => :delete}) do |f| %>
 
 		<p> <%= t(:delete_message) %> </p>
 

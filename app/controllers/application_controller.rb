@@ -3,22 +3,26 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
-  MAX_RETRIES_IDTOKEN = 3
+  around_filter :user_time_zone, if: :current_user
 
-  # around_filter :set_time_zone
+  helper_method :current_user
 
-  # def set_time_zone(&block)
-  #   time_zone = current_user.try(:time_zone) || 'UTC'
-  #   Time.use_zone(time_zone, &block)
-  # end
+  def current_user
+    # Take the URL to extract the resource: [Professional, Company]
+    resource= request.path.split('/')[2]
+    
+    @is_company = resource == "companies" ? true : false
+        
+    if resource && params[resource.singularize+"_id"]
+      @current_user = resource.singularize.classify.constantize.find(params[resource.singularize+"_id"])
+    end
+  end
   
   def default_url_options(options = {})
   	{ locale: I18n.locale }.merge options
 	end
 
-	def set_api_time_zone
-	  utc_offset = current_user_session && current_user_session.user ? current_user_session.user.time_zone_offset.to_i.minutes : 0
-	  user_timezone = ActiveSupport::TimeZone[utc_offset]
-	  Time.zone = user_timezone if user_timezone
+	def user_time_zone(&block)
+    Time.use_zone(current_user.time_zone, &block)
 	end
 end

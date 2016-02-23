@@ -1,11 +1,11 @@
 <% @page_title = t(:company).pluralize(locale) %>
 
-<%= link_to("<< " + t(:return_to), [@user, params[:controller]], :class => 'back-link') %>
+<%= link_to("<< " + t(:return_to), [@current_user, params[:controller]], :class => 'back-link') %>
 
 <div class="companies edit">
   <h2><%= t(:update) + " " + t(:company) %></h2>
 
-  <%= form_for([@user, @company]) do |f| %>
+  <%= form_for([@current_user, @company]) do |f| %>
 
     <%= render(:partial => "form", :locals => {:f => f}) %>
 
