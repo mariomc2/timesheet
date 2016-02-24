@@ -10,9 +10,9 @@ class ProfessionalsController < ApplicationController
   end
 
   def index
-    if @current_user
+    if @is_company # If the user is a Company
       @professionals = @current_user.professionals
-    else
+    else # If the user is professional pass the whole list ONLY for testing
       @professionals = Professional.all
     end
   end
@@ -22,11 +22,16 @@ class ProfessionalsController < ApplicationController
   end
 
   def new
-    if @current_user
-      @professional = @current_user.professionals.new
-    else
-      @professional = Professional.new
-    end    
+    begin
+      if @current_user @is_company # If the user is a company and is creating a new virtual professional
+        @professional = @current_user.professionals.new
+      else # kicks in when registering a new Professional
+        @professional = Professional.new
+      end    
+    rescue Exception => e # Catch exceptions 
+      flash[:notice] = e.to_s
+      redirect_to([@current_user, :professionals])
+    end
   end
 
   def create
@@ -35,17 +40,29 @@ class ProfessionalsController < ApplicationController
       
     # Save the object
     if professional.save
-      
-      if not(@is_company)
-        company = professional.companies.create(default: true, name: "-")
-        branch = company.branches.create(default: true, name: "-")
-        client = branch.clients.create(default: true, company_id: company.id, dob: "1900-01-01", first_name: "-", last_name: "-")
-        professional.clients << client
-      end      
+      begin
+        if !@is_company # If user is a professional then create a virtual company and default (empty) children
+          company = professional.companies.create(default: true, name: "-")
+          branch = company.branches.create(default: true, name: "-")
+          client = branch.clients.create(default: true, company_id: company.id, dob: "1900-01-01", first_name: "-", last_name: "-")
+          professional.clients << client
+        else # if the user is a company just make the proper associations to the new virtual professional
+        end      
 
-      # If save succeeds, redirect to the index action
-      flash[:notice] = "#{t(:professional)} #{t(:create_success)}"
-      redirect_to([@current_user, :professionals])      
+        # If save succeeds, redirect to the index action
+        flash[:notice] = "#{t(:professional)} #{t(:create_success)}"
+        redirect_to([@current_user, :professionals])  
+
+      rescue Exception => e # Catch exceptions if it can't create the children of a company
+        # If there is an exception delete the objects created and redirect to index
+        professional.destroy
+        if branch then branch.destroy end        
+        if client then client.destroy end
+        if company then company.destroy end
+
+        flash[:notice] = "#{t(:professional)}->" + e.to_s
+        redirect_to([@current_user, :professionals])
+      end  
     else
     # If save fails, redisplay the from so user can fix problems
       render('new')

@@ -25,9 +25,9 @@ class CompaniesController < ApplicationController
     begin
       if !@is_company # If the user is a professional and is creating a new virtual company
         @company = @current_user.companies.new
-      else
+      else # kicks in when registering a new Company
         @company = Company.new
-      end # kicks in when registering a new Company
+      end 
     rescue Exception => e # Catch exceptions 
       flash[:notice] = e.to_s
       redirect_to([@current_user, :companies])
