@@ -14,7 +14,7 @@ class Company < ActiveRecord::Base
 		MAX_RETRIES = 3
 		# generate a unique token id for new records
 		def generate_token			
-			self.id_token ||= SecureRandom.hex(4) 
+			self.id_token ||= SecureRandom.hex(8) 
 			if Company.exists?(:id_token => self.id_token)
 				self.id_token = nil
 				raise

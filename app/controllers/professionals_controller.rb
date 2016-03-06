@@ -23,10 +23,10 @@ class ProfessionalsController < ApplicationController
 
   def new
     begin
-      if @current_user @is_company # If the user is a company and is creating a new virtual professional
+      if @is_company # If the user is a company and is creating a new virtual professional
         @professional = @current_user.professionals.new
       else # kicks in when registering a new Professional
-        @professional = Professional.new
+        @professional = Professional.new(is_virtual: false)
       end    
     rescue Exception => e # Catch exceptions 
       flash[:notice] = e.to_s
@@ -34,37 +34,37 @@ class ProfessionalsController < ApplicationController
     end
   end
 
-  def create
+  def create        
     # Instantiate a new object using form parameters
-    professional = Professional.new(professional_params)
-      
-    # Save the object
-    if professional.save
+    @professional = Professional.new(professional_params)
+    if @professional.save
       begin
         if !@is_company # If user is a professional then create a virtual company and default (empty) children
-          company = professional.companies.create(default: true, name: "-")
-          branch = company.branches.create(default: true, name: "-")
-          client = branch.clients.create(default: true, company_id: company.id, dob: "1900-01-01", first_name: "-", last_name: "-")
-          professional.clients << client
+          company = Company.create(is_default: true, name: "-")
+          Employment.create(:company => company, :professional => @professional, :note => "Virtual company, Real professional", :validated => true)
+          branch = company.branches.create(is_default: true, name: "-")
+          client = branch.clients.create(is_default: true, company_id: company.id, dob: "1900-01-01", first_name: "-", last_name: "-")
+          @professional.clients << client
         else # if the user is a company just make the proper associations to the new virtual professional
+          Employment.create(:company => @current_user, :professional => @professional, :note => "Real company, Virtual professional", :validated => true)
         end      
 
         # If save succeeds, redirect to the index action
         flash[:notice] = "#{t(:professional)} #{t(:create_success)}"
-        redirect_to([@current_user, :professionals])  
+        redirect_to([@current_user, :professionals])      
 
       rescue Exception => e # Catch exceptions if it can't create the children of a company
         # If there is an exception delete the objects created and redirect to index
-        professional.destroy
+        @professional.destroy
         if branch then branch.destroy end        
         if client then client.destroy end
         if company then company.destroy end
 
         flash[:notice] = "#{t(:professional)}->" + e.to_s
         redirect_to([@current_user, :professionals])
-      end  
+      end      
     else
-    # If save fails, redisplay the from so user can fix problems
+      # If save fails, redisplay the from so user can fix problems
       render('new')
     end
   end
@@ -107,6 +107,6 @@ class ProfessionalsController < ApplicationController
       # same as using "params[:professional]", except taht it:
       # - raises an error if :professional is not present
       # - allows listed attributes to be mass-assigned
-      params.require(:professional).permit(:id_token, :first_name, :last_name, :id_code, :dob, :email, :speciality, :default, :time_zone)
+      params.require(:professional).permit(:id_token, :first_name, :last_name, :id_code, :dob, :email, :speciality, :is_virtual, :is_default, :time_zone)
     end
 end

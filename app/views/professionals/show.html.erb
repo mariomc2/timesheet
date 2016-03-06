@@ -53,6 +53,18 @@
           <td><%= @professional.acc_active %><%#= status_tag(@professional.acc_active) %></td>
         </tr>
         <tr>
+          <th><%= "ID Token" %></th>
+          <td><%= @professional.id_token %></td>
+        </tr>
+        <tr>
+          <th><%= "is Virtual?" %></th>
+          <td><%= @professional.is_virtual %></td>
+        </tr>
+        <tr>
+          <th><%= "is Default?" %></th>
+          <td><%= @professional.is_default %></td>
+        </tr>
+        <tr>
           <th><%= t(:created_at) %></th>
           <td><%= @professional.created_at %></td>
         </tr>

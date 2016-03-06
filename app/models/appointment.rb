@@ -1,10 +1,11 @@
 class Appointment < ActiveRecord::Base
 	belongs_to :company
-	belongs_to :branch
-	belongs_to :professional
+	belongs_to :branch	
 	belongs_to :client
+	has_many :assignments
+	has_many :professionals, :through => :assignments
 
-	validates_presence_of :company_id, :branch_id, :professional_id, :client_id
+	validates_presence_of :branch_id, :client_id, :company_id
 
 	after_initialize :generate_token, :if => :new_record?
 
@@ -12,7 +13,7 @@ class Appointment < ActiveRecord::Base
 		MAX_RETRIES = 3
 		# generate a unique token id for new records
 		def generate_token
-			self.id_token ||= SecureRandom.hex(4) 
+			self.id_token ||= SecureRandom.hex(8) 
 			if Appointment.exists?(:id_token => id_token)
 				self.id_token = nil
 				raise

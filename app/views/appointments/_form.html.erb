@@ -6,19 +6,21 @@
     <tbody>
       <tr>
         <th><%= f.label(:professional_id, t(:professional)) %></th>
-        <td><%= @is_company ? f.collection_select(:professional_id, @current_user.professionals, :id, :first_name , include_blank: true) :  @appointment.professional.first_name + " " + @appointment.professional.last_name %></td>        
+        <td><%= @is_company ? f.collection_select(:professional_id, @current_user.professionals, :id, :first_name) :  @appointment.professional.first_name + " " + @appointment.professional.last_name %>
+          <%= @is_company ? f.hidden_field(:company_id, :value => @current_user.id) :  f.hidden_field(:professional_id, :value => @current_user.id) %>
+        </td>        
       </tr>
       <tr>
         <th><%= f.label(:company_id, t(:company)) %></th>
-        <td><%= @is_company ? @current_user.name : f.collection_select(:company_id, @current_user.companies, :id, :name,include_blank: true) %></td>
+        <td><%= @is_company ? @current_user.name : f.collection_select(:company_id, @current_user.companies, :id, :name) %></td>
       </tr>
       <tr>
         <th><%= f.label(:branch_id, t(:branch)) %></th>
-        <td><%= @is_company ? f.collection_select(:branch_id, @current_user.branches, :id, :name, include_blank: true) : f.grouped_collection_select(:branch_id, @current_user.companies, :branches, :name, :id, :name, include_blank: true) %></td>
+        <td><%= @is_company ? f.collection_select(:branch_id, @current_user.branches, :id, :name) : f.grouped_collection_select(:branch_id, @current_user.companies, :branches, :name, :id, :name) %></td>
       </tr>
       <tr>
         <th><%= f.label(:client_id, t(:client)) %></th>
-        <td><%= @is_company ? f.collection_select(:client_id, @current_user.clients, :id, :first_name, include_blank: true) : f.grouped_collection_select(:client_id, @current_user.companies, :clients, :name, :id, :first_name, include_blank: true) %></td>
+        <td><%= @is_company ? f.collection_select(:client_id, @current_user.clients, :id, :first_name) : f.grouped_collection_select(:client_id, @current_user.companies, :clients, :name, :id, :first_name) %></td>
       </tr>
       <tr>
         <th><%= f.label(:shared, t(:shared)) %></th>
@@ -59,7 +61,7 @@
       </tr>
       <tr>
         <th><%= f.label(:professional_fee, t(:professional_fee)) %></th>
-        <td><%= f.text_field(:professional_fee) %></td>
+        <td><%#= f.text_field(:professional_fee) %></td>
       </tr>
       <tr>
         <th><%= f.label(:remaining_project_payment, t(:remaining_project_payment)) %></th>

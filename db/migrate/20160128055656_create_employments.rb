@@ -4,10 +4,9 @@ class CreateEmployments < ActiveRecord::Migration
     	t.integer "company_id"
     	t.integer "professional_id"
 
-			t.boolean "company_virtual"
-			t.boolean "professional_virtual"
-
     	t.boolean "validated", :default => false
+
+      t.text "note"
 
       t.timestamps null: false
     end

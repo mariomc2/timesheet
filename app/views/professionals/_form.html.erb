@@ -28,6 +28,7 @@
         <td><%= f.text_field(:speciality) %></td>
       </tr>
     </tbody>
+    <%= f.hidden_field(:is_virtual, :value => @professional.is_virtual) %>
   </table>
 </div>
 

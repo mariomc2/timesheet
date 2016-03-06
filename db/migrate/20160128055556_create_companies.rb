@@ -14,7 +14,8 @@ class CreateCompanies < ActiveRecord::Migration
     	t.string "password_digest"
       t.datetime "last_in"
 
-      t.boolean "default", :default => false
+      t.boolean "is_virtual", :default => true
+      t.boolean "is_default", :default => false
       
       t.string "time_zone"
       t.timestamps null: false

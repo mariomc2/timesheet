@@ -20,21 +20,33 @@ class AppointmentsController < ApplicationController
   end
 
   def new
-    @appointment = @current_user.appointments.new({:date_time => Time.zone.now})
+    begin
+      @appointment = @current_user.appointments.new({:date_time => Time.zone.now})
+    rescue Exception => e # Catch exceptions 
+      flash[:notice] = e.to_s
+      redirect_to([@current_user, :appointments])
+    end
   end
 
   def create
     # Instantiate a new object using form parameters
-    @appointment = Appointment.new(appointment_params)
-    @current_user.appointments << @appointment
-    # Save the object
+    @appointment = Appointment.create(appointment_params)
     if @appointment.save
-    # If save succeeds, redirect to the index action
-      flash[:notice] = "#{t(:appointment)} #{t(:create_success)}"
-      redirect_to([@current_user, :appointments])
+      begin
+        @current_user.appointments << @appointment
+        
+        # If save succeeds, redirect to the index action
+        flash[:notice] = "#{t(:appointment)} #{t(:create_success)}"        
+      rescue Exception => e # Catch exceptions if it can't create the children of a company
+        # If there is an exception delete the objects created and redirect to index
+        if @appointment then @appointment.destroy end
+
+        flash[:notice] = "#{t(:appointment)}->" + e.to_s
+        redirect_to([@current_user, :appointments]) 
+      end   
     else
-    # If save fails, redisplay the from so user can fix problems
-      render('new')
+      # If save fails, redisplay the from so user can fix problems
+      render('new') 
     end
   end
 
@@ -76,6 +88,6 @@ class AppointmentsController < ApplicationController
       # same as using "params[:appointment]", except taht it:
       # - raises an error if :appointment is not present
       # - allows listed attributes to be mass-assigned
-      params.require(:appointment).permit(:company_id, :branch_id, :professional_id, :client_id, :shared, :needs_folloup, :date_time, :status, :task_type, :task_note, :total_project_price, :task_payment, :professional_fee, :remaining_project_payment, :time_zone)
+      params.require(:appointment).permit(:id_token, :company_id, :branch_id, :professional_id, :client_id, :shared, :needs_folloup, :date_time, :status, :task_type, :task_note, :total_project_price, :task_payment, :remaining_project_payment, :time_zone)
     end
 end

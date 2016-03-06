@@ -11,13 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160128055713) do
+ActiveRecord::Schema.define(version: 20160306023347) do
 
   create_table "appointments", force: :cascade do |t|
     t.string   "id_token",                  limit: 255,                   null: false
     t.integer  "company_id",                limit: 4
     t.integer  "branch_id",                 limit: 4
-    t.integer  "professional_id",           limit: 4
     t.integer  "client_id",                 limit: 4
     t.boolean  "shared",                                  default: false
     t.datetime "date_time",                                               null: false
@@ -27,7 +26,6 @@ ActiveRecord::Schema.define(version: 20160128055713) do
     t.text     "task_note",                 limit: 65535
     t.float    "total_project_price",       limit: 24
     t.float    "task_payment",              limit: 24
-    t.float    "professional_fee",          limit: 24
     t.float    "remaining_project_payment", limit: 24
     t.boolean  "needs_folloup",                           default: false
     t.string   "time_zone",                 limit: 255
@@ -39,7 +37,17 @@ ActiveRecord::Schema.define(version: 20160128055713) do
   add_index "appointments", ["client_id"], name: "index_appointments_on_client_id", using: :btree
   add_index "appointments", ["company_id"], name: "index_appointments_on_company_id", using: :btree
   add_index "appointments", ["id_token", "date_time"], name: "index_appointments_on_id_token_and_date_time", using: :btree
-  add_index "appointments", ["professional_id"], name: "index_appointments_on_professional_id", using: :btree
+
+  create_table "assignments", force: :cascade do |t|
+    t.integer  "appointment_id",   limit: 4
+    t.integer  "professional_id",  limit: 4
+    t.float    "professional_fee", limit: 24
+    t.text     "note",             limit: 65535
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+  end
+
+  add_index "assignments", ["appointment_id", "professional_id"], name: "index_assignments_on_appointment_id_and_professional_id", using: :btree
 
   create_table "branches", force: :cascade do |t|
     t.string   "id_token",        limit: 255,                 null: false
@@ -51,7 +59,7 @@ ActiveRecord::Schema.define(version: 20160128055713) do
     t.boolean  "acc_active",                  default: false
     t.string   "password_digest", limit: 255
     t.datetime "last_in"
-    t.boolean  "default",                     default: false
+    t.boolean  "is_default",                  default: false
     t.string   "time_zone",       limit: 255
     t.datetime "created_at",                                  null: false
     t.datetime "updated_at",                                  null: false
@@ -70,7 +78,7 @@ ActiveRecord::Schema.define(version: 20160128055713) do
     t.date     "dob",                                    null: false
     t.string   "email",      limit: 255, default: "@"
     t.string   "photo",      limit: 255
-    t.boolean  "default",                default: false
+    t.boolean  "is_default",             default: false
     t.datetime "created_at",                             null: false
     t.datetime "updated_at",                             null: false
   end
@@ -98,7 +106,8 @@ ActiveRecord::Schema.define(version: 20160128055713) do
     t.boolean  "acc_active",                  default: false
     t.string   "password_digest", limit: 255
     t.datetime "last_in"
-    t.boolean  "default",                     default: false
+    t.boolean  "is_virtual",                  default: true
+    t.boolean  "is_default",                  default: false
     t.string   "time_zone",       limit: 255
     t.datetime "created_at",                                  null: false
     t.datetime "updated_at",                                  null: false
@@ -128,13 +137,12 @@ ActiveRecord::Schema.define(version: 20160128055713) do
   add_index "contact_details", ["professional_id"], name: "index_contact_details_on_professional_id", using: :btree
 
   create_table "employments", force: :cascade do |t|
-    t.integer  "company_id",           limit: 4
-    t.integer  "professional_id",      limit: 4
-    t.boolean  "company_virtual"
-    t.boolean  "professional_virtual"
-    t.boolean  "validated",                      default: false
-    t.datetime "created_at",                                     null: false
-    t.datetime "updated_at",                                     null: false
+    t.integer  "company_id",      limit: 4
+    t.integer  "professional_id", limit: 4
+    t.boolean  "validated",                     default: false
+    t.text     "note",            limit: 65535
+    t.datetime "created_at",                                    null: false
+    t.datetime "updated_at",                                    null: false
   end
 
   add_index "employments", ["company_id", "professional_id"], name: "index_employments_on_company_id_and_professional_id", using: :btree
@@ -151,7 +159,8 @@ ActiveRecord::Schema.define(version: 20160128055713) do
     t.boolean  "acc_active",                  default: false
     t.string   "password_digest", limit: 255
     t.datetime "last_in"
-    t.boolean  "default",                     default: false
+    t.boolean  "is_virtual",                  default: true
+    t.boolean  "is_default",                  default: false
     t.string   "time_zone",       limit: 255
     t.datetime "created_at",                                  null: false
     t.datetime "updated_at",                                  null: false

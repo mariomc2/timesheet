@@ -50,12 +50,12 @@
             <td><%= appointment.shared %></td>
             <td><%= appointment.company_id %></td>
             <td><%= appointment.branch_id %></td>
-            <td><%= appointment.professional_id %></td>
+            <td><%#= appointment.professional_id %></td>
             <td><%= appointment.client_id %></td>
             <td><%= appointment.date_time %></td>
             <td><%= appointment.status %></td>
             <td><%= appointment.task_type %></td>
-            <td><%= appointment.professional_fee %></td>
+            <td><%#= appointment.professional_fee %></td>
             <td class="actions">
               <%= link_to(t(:show), [@current_user, appointment], :class => 'action show') %>
               <%= link_to(t(:edit), [:edit, @current_user, appointment], :class => 'action edit') %>

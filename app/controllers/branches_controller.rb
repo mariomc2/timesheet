@@ -6,9 +6,9 @@ class BranchesController < ApplicationController
   before_action :current_user
 
   def index    
-    if @is_company 
+    if @is_company # if the user is a company list the branches under it
       @branches = @current_user.branches
-    else
+    else # if the user is a professional check that the param company_id exist to show the branches under a specific companuy
       if params[:company_id]
         @branches = Branch.where(company_id: params[:company_id])
       else
@@ -22,28 +22,40 @@ class BranchesController < ApplicationController
   end
 
   def new
-    if @is_company
-      @branch = @current_user.branches.new()
-    else
-      if params[:company_id]
-        @branch = Branch.new(company_id: params[:company_id])
+    begin
+      if @is_company #if the user is a company
+        @branch = @current_user.branches.new()
       else
-        redirect_to([@current_user, :companies])
+        if params[:company_id]
+          @branch = Branch.new(company_id: params[:company_id])
+        else
+          redirect_to([@current_user, :companies])
+        end
       end
+    rescue Exception => e # Catch exceptions 
+      flash[:notice] = e.to_s
+      redirect_to([@current_user, :companies])
     end
   end
 
-  def create
+  def create  
     # Instantiate a new object using form parameters
     @branch = Branch.new(branch_params)
-    # Save the object
     if @branch.save
-    # If save succeeds, redirect to the index action
-      flash[:notice] = "#{t(:branch)} #{t(:create_success)}"
-      redirect_to([@current_user, :branches])
+      begin
+        # If save succeeds, redirect to the index action
+        flash[:notice] = "#{t(:branch)} #{t(:create_success)}"
+        
+      rescue Exception => e # Catch exceptions if it can't create the children of a company
+        # If there is an exception delete the objects created and redirect to index        
+        if @branch then @branch.destroy end        
+        
+        flash[:notice] = "#{t(:branch)}->" + e.to_s
+        redirect_to([@current_user, :branches])
+      end    
     else
-    # If save fails, redisplay the from so user can fix problems
-      render('new')
+      # If save fails, redisplay the from so user can fix problems
+        render('new')
     end
   end
 
@@ -85,6 +97,6 @@ class BranchesController < ApplicationController
       # same as using "params[:professional]", except taht it:
       # - raises an error if :professional is not present
       # - allows listed attributes to be mass-assigned
-      params.require(:branch).permit(:company_id, :name, :id_code, :email, :time_zone)
+      params.require(:branch).permit(:id_token, :company_id, :name, :id_code, :email, :time_zone)
     end
 end

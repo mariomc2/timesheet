@@ -1,9 +1,12 @@
 class Professional < ActiveRecord::Base
 	has_many :contact_details
-	has_many :appointments#, :dependent => :destroy
+	has_many :assignments
+	has_many :appointments, :through => :assignments
 	has_and_belongs_to_many :clients
 	has_many :employments
 	has_many :companies, :through => :employments
+
+	validates_presence_of :first_name
 
 	scope :sorted_name, lambda { order("professionals.first_name ASC")}
 	scope :sorted_Lastname, lambda { order("professionals.last_name ASC")}
@@ -18,7 +21,7 @@ class Professional < ActiveRecord::Base
 		MAX_RETRIES = 3
 		# generate a unique token id for new records
 		def generate_token
-			self.id_token ||= SecureRandom.hex(6) 
+			self.id_token ||= SecureRandom.hex(8) 
 			if Professional.exists?(:id_token => id_token)
 				self.id_token = nil
 				raise

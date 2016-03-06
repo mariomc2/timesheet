@@ -46,6 +46,19 @@
           <td><%= @company.acc_active %><%#= status_tag(@company.acc_active) %></td>
         </tr>
         <tr>
+          <th><%= "ID Token" %></th>
+          <td><%= @company.id_token %></td>
+        </tr>
+        <tr>
+          <th><%= "is Virtual?" %></th>
+          <td><%= @company.is_virtual %></td>
+        </tr>
+        <tr>
+          <th><%= "is Default?" %></th>
+          <td><%= @company.is_default %></td>
+        </tr>
+        <tr>
+        <tr>
           <th><%= t(:last_in) %></th>
           <td><%= @company.last_in %></td>
         </tr>

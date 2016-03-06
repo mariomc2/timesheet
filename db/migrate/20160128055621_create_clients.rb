@@ -15,7 +15,7 @@ class CreateClients < ActiveRecord::Migration
 
     	t.string "photo"
 
-        t.boolean "default", :default => false
+        t.boolean "is_default", :default => false
 
       t.timestamps null: false
     end

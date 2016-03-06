@@ -13,7 +13,7 @@ class Branch < ActiveRecord::Base
 		MAX_RETRIES = 3
 		# generate a unique token id for new records
 		def generate_token
-			self.id_token ||= SecureRandom.hex(4)
+			self.id_token ||= SecureRandom.hex(8)
 			if Branch.exists?(:id_token => id_token)
 				self.id_token = nil
 				raise
