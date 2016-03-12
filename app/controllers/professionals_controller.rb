@@ -38,31 +38,35 @@ class ProfessionalsController < ApplicationController
     # Instantiate a new object using form parameters
     @professional = Professional.new(professional_params)
     if @professional.save
-      begin
-        if !@is_company # If user is a professional then create a virtual company and default (empty) children
-          company = Company.create(is_default: true, name: "-")
-          Employment.create(:company => company, :professional => @professional, :note => "Virtual company, Real professional", :validated => true)
-          branch = company.branches.create(is_default: true, name: "-")
-          client = branch.clients.create(is_default: true, company_id: company.id, dob: "1900-01-01", first_name: "-", last_name: "-")
-          @professional.clients << client
-        else # if the user is a company just make the proper associations to the new virtual professional
-          Employment.create(:company => @current_user, :professional => @professional, :note => "Real company, Virtual professional", :validated => true)
-        end      
+      if @is_company then Employment.create(:company => @current_user, :professional => @professional, :note => "Real company, Virtual professional", :validated => true) end
+      # If save succeeds, redirect to the index action
+      flash[:notice] = "#{t(:professional)} #{t(:create_success)}"
+      redirect_to([@current_user, :professionals]) 
+      # begin
+      #   if !@is_company # If user is a professional then create a virtual company and default (empty) children
+      #     company = Company.create(is_default: true, name: "-")
+      #     Employment.create(:company => company, :professional => @professional, :note => "Virtual company, Real professional", :validated => true)
+      #     branch = company.branches.create(is_default: true, name: "-")
+      #     client = branch.clients.create(is_default: true, company_id: company.id, dob: "1900-01-01", first_name: "-", last_name: "-")
+      #     @professional.clients << client
+      #   else # if the user is a company just make the proper associations to the new virtual professional
+      #     Employment.create(:company => @current_user, :professional => @professional, :note => "Real company, Virtual professional", :validated => true)
+      #   end      
 
-        # If save succeeds, redirect to the index action
-        flash[:notice] = "#{t(:professional)} #{t(:create_success)}"
-        redirect_to([@current_user, :professionals])      
+      #   # If save succeeds, redirect to the index action
+      #   flash[:notice] = "#{t(:professional)} #{t(:create_success)}"
+      #   redirect_to([@current_user, :professionals])      
 
-      rescue Exception => e # Catch exceptions if it can't create the children of a company
-        # If there is an exception delete the objects created and redirect to index
-        @professional.destroy
-        if branch then branch.destroy end        
-        if client then client.destroy end
-        if company then company.destroy end
+      # rescue Exception => e # Catch exceptions if it can't create the children of a company
+      #   # If there is an exception delete the objects created and redirect to index
+      #   @professional.destroy
+      #   if branch then branch.destroy end        
+      #   if client then client.destroy end
+      #   if company then company.destroy end
 
-        flash[:notice] = "#{t(:professional)}->" + e.to_s
-        redirect_to([@current_user, :professionals])
-      end      
+      #   flash[:notice] = "#{t(:professional)}->" + e.to_s
+      #   redirect_to([@current_user, :professionals])
+      # end      
     else
       # If save fails, redisplay the from so user can fix problems
       render('new')

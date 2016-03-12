@@ -41,18 +41,21 @@ class BranchesController < ApplicationController
   def create  
     # Instantiate a new object using form parameters
     @branch = Branch.new(branch_params)
+    redirect_to([@current_user, :companies])
     if @branch.save
-      begin
-        # If save succeeds, redirect to the index action
-        flash[:notice] = "#{t(:branch)} #{t(:create_success)}"
+      # If save succeeds, redirect to the index action
+      flash[:notice] = "#{t(:branch)} #{t(:create_success)}" 
+      # begin
+      #   # If save succeeds, redirect to the index action
+      #   flash[:notice] = "#{t(:branch)} #{t(:create_success)}"
         
-      rescue Exception => e # Catch exceptions if it can't create the children of a company
-        # If there is an exception delete the objects created and redirect to index        
-        if @branch then @branch.destroy end        
+      # rescue Exception => e # Catch exceptions if it can't create the children of a company
+      #   # If there is an exception delete the objects created and redirect to index        
+      #   if @branch then @branch.destroy end        
         
-        flash[:notice] = "#{t(:branch)}->" + e.to_s
-        redirect_to([@current_user, :branches])
-      end    
+      #   flash[:notice] = "#{t(:branch)}->" + e.to_s
+      #   redirect_to([@current_user, :branches])
+      # end    
     else
       # If save fails, redisplay the from so user can fix problems
         render('new')

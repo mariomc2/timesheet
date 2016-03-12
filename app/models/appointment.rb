@@ -5,7 +5,10 @@ class Appointment < ActiveRecord::Base
 	has_many :assignments
 	has_many :professionals, :through => :assignments
 
-	validates_presence_of :branch_id, :client_id, :company_id
+	accepts_nested_attributes_for :assignments, reject_if: :all_blank
+	#accepts_nested_attributes_for :professionals
+
+	#validates_presence_of :branch_id, :client_id, :company_id
 
 	after_initialize :generate_token, :if => :new_record?
 

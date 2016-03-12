@@ -1,0 +1,22 @@
+
+<li class="nested-fields">
+	<table class="table table-inverse">
+		<tbody>
+			<div>
+				<tr>
+					<th><%= f.label(:professional_id, t(:professional)) %></th>
+					<td><%= f.collection_select(:professional_id, @current_user.professionals, :id, :first_name, include_blank: true) %></td>
+				</tr>
+				<tr>
+					<th><%= f.label(:professional_fee, t(:professional_fee)) %></th>
+					<td><%= f.text_field(:professional_fee) %></td>
+				</tr>
+				<tr>
+					<th><%= f.label(:note, t(:note)) %></th>
+					<td><%= f.text_field(:note) %></td>
+				</tr>
+				<tr><%= link_to_remove_association t(:remove), f %></tr>
+			</div>
+		</tbody>
+	</table>
+</li>

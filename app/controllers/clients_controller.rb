@@ -32,18 +32,21 @@ class ClientsController < ApplicationController
     # Instantiate a new object using form parameters
     @client = Client.new(client_params) 
     if @client.save
-      begin   
-        @current_user.clients << @client
-        # If save succeeds, redirect to the index action
-        flash[:notice] = "#{t(:client)} #{t(:create_success)}"
-        redirect_to([@current_user, :clients])
-      rescue Exception => e # Catch exceptions if it can't create the children of a company
-        # If there is an exception delete the objects created and redirect to index
-        if @client then @client.destroy end
+      # If save succeeds, redirect to the index action
+      flash[:notice] = "#{t(:client)} #{t(:create_success)}"
+      redirect_to([@current_user, :clients])
+      # begin   
+      #   @current_user.clients << @client
+      #   # If save succeeds, redirect to the index action
+      #   flash[:notice] = "#{t(:client)} #{t(:create_success)}"
+      #   redirect_to([@current_user, :clients])
+      # rescue Exception => e # Catch exceptions if it can't create the children of a company
+      #   # If there is an exception delete the objects created and redirect to index
+      #   if @client then @client.destroy end
 
-        flash[:notice] = "#{t(:client)}->" + e.to_s
-        redirect_to([@current_user, :clients])        
-      end
+      #   flash[:notice] = "#{t(:client)}->" + e.to_s
+      #   redirect_to([@current_user, :clients])        
+      # end
     else
       # If save fails, redisplay the from so user can fix problems
       render('new')

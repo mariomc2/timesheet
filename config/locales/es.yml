@@ -33,6 +33,8 @@ es:
   total_project_price: Precio Total de Tratamiento
   task_payment: Pago del Procedimiento
   professional_fee: Pago a Profesional
+  note: Anotación
+  remove: Remover
   remaining_project_payment: Saldo por Tratamiento
   add_new_professional: Agregar nuevo profesional
   add_new_company: Agregar nueva Clinica

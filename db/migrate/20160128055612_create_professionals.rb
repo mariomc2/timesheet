@@ -20,7 +20,7 @@ class CreateProfessionals < ActiveRecord::Migration
         t.datetime "last_in"
 
         t.boolean "is_virtual", :default => true
-        t.boolean "is_default", :default => false
+        #t.boolean "is_default", :default => false
 
       t.string "time_zone"
       t.timestamps null: false

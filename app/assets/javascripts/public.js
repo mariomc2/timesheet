@@ -19,3 +19,4 @@
 //= require moment
 //= require bootstrap-datetimepicker
 //= require moment/es
+//= require cocoon
