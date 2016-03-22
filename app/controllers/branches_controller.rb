@@ -41,7 +41,7 @@ class BranchesController < ApplicationController
   def create  
     # Instantiate a new object using form parameters
     @branch = Branch.new(branch_params)
-    redirect_to([@current_user, :companies])
+    #redirect_to([@current_user, :companies])
     if @branch.save
       # If save succeeds, redirect to the index action
       flash[:notice] = "#{t(:branch)} #{t(:create_success)}" 

@@ -6,6 +6,7 @@
       <tr>
         <th><%= f.label(:company_id, t(:company)) %></th>
         <td><%= @is_company ? @current_user.name : f.collection_select(:company_id, @current_user.companies, :id, :name,include_blank: true) %></td>
+        <%= @is_company ? f.hidden_field(:company_id, :value => @current_user.id) : "-" %>
       </tr>
       <tr>
         <th><%= f.label(:branch_id, t(:branch)) %></th>

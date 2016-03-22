@@ -9,14 +9,17 @@
         <td><%#= @is_company ? f.collection_select(:professional_id, @current_user.professionals, :id, :first_name) :  @appointment.professional.first_name + " " + @appointment.professional.last_name %>
           <%#= @is_company ? f.hidden_field(:company_id, :value => @current_user.id) :  f.hidden_field(:professional_id, :value => @current_user.id) %>
           
-          <%= f.fields_for :assignments do |assignment| %>
-            <%= render "assignment_fields", :f => assignment %>
-          <% end %>        
-          <br>
-          <%= link_to_add_association t(:add_new_professional), f, :assignments %>
-
-          <%= f.hidden_field(:company_id, :value => @current_user.id) %>
-
+          <% if @is_company %>
+            <%= f.fields_for :assignments do |assignment| %>
+              <%= render "assignment_fields", :f => assignment %>
+            <% end %>        
+            <br>
+            <%= link_to_add_association t(:add_new_professional), f, :assignments %>
+            <%= f.hidden_field(:company_id, :value => @current_user.id) %>
+          <% else %>
+            <%#= @appointment.professional.first_name + " " + @appointment.professional.last_name %>
+            <%#= f.hidden_field(:professional_id, :value => @current_user.id) %>
+          <% end %>  
         </td>        
       </tr>
       <tr>

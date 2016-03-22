@@ -9,7 +9,7 @@ class AppointmentsController < ApplicationController
     if params[:company_id]
       @appointments = @current_user.appointments.where(company_id: params[:company_id])
     elsif params[:professional_id]
-      @appointments = @current_user.appointments.where(professional_id: params[:professional_id])        
+      @appointments = @current_user.appointments        
     else
       @appointments = @current_user.appointments
     end    
@@ -32,6 +32,7 @@ class AppointmentsController < ApplicationController
     # Instantiate a new object using form parameters
     @appointment = Appointment.new(appointment_params)
     if @appointment.save
+      @current_user.appointments << @appointment
       # If save succeeds, redirect to the index action
       flash[:notice] = "#{t(:appointment)} #{t(:create_success)}" 
       redirect_to([@current_user, :appointments]) 

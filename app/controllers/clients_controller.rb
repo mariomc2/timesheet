@@ -32,6 +32,7 @@ class ClientsController < ApplicationController
     # Instantiate a new object using form parameters
     @client = Client.new(client_params) 
     if @client.save
+      @current_user.clients << @client
       # If save succeeds, redirect to the index action
       flash[:notice] = "#{t(:client)} #{t(:create_success)}"
       redirect_to([@current_user, :clients])

@@ -5,7 +5,7 @@ class Client < ActiveRecord::Base
 	has_many :appointments
 	has_and_belongs_to_many :professionals
 
-	validates_presence_of :company_id, :branch_id
+	#validates_presence_of :company_id, :branch_id
 
 	after_initialize :generate_token, :if => :new_record?
 
