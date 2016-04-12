@@ -5,6 +5,15 @@
 <div class="client show">
   <h2><%= t(:show) + " " + t(:client) %></h2>
 
+  <div>
+    <%= button_to( {controller: "clients", action: "edit"}, :class => "btn btn-primary btn-xs", :method => :get ) do%>
+      <span class="glyphicon glyphicon-pencil"></span><%=" "+ t(:edit) %>
+    <% end %>    
+    <%= button_to( {controller: "clients", action: "delete"}, :class => "btn btn-danger btn-xs", :method => :get ) do%>
+      <span class="glyphicon glyphicon-fire"></span><%=" "+ t(:delete) %>
+    <% end %>
+  </div>
+
   <div class="table-responsive">
     <table id="show_table" class="display responsive" summary="client detail view">
       <tbody>

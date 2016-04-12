@@ -30,6 +30,7 @@
         </tr>
         <tr>
           <th>&nbsp;</th>
+          <th>&nbsp;</th>
           <th><%= t(:first_name) %></th>
           <th><%= t(:last_name) %></th>
           <th><%= t(:email) %></th>
@@ -37,8 +38,7 @@
           <th><%= t(:dob) %></th>     
           <th><%= t(:company) %></th>
           <th><%= t(:branch) %></th>
-          <th><%= t(:professional).pluralize(locale) %></th>          
-          <th><%= t(:action) %></th>
+          <th><%= t(:professional).pluralize(locale) %></th>                    
         </tr>
       </thead>
       <tbody>
@@ -46,6 +46,7 @@
         
           <tr class="<%= cycle('odd', 'even') %>">
             <td><%= client.id %></td>
+            <td> <%= link_to [@current_user, client] do %> <span class="glyphicon glyphicon-eye-open"></span> <% end %> </td>
             <td><%= client.first_name %></td>
             <td><%= client.last_name %></td>
             <td><%= client.email %></td>
@@ -53,12 +54,7 @@
             <td><%= client.dob %></td>
             <td><%= client.company_id %></td>
             <td><%= client.branch_id %></td>
-            <td><%= client.professionals.size %></td>
-            <td class="actions">
-              <%= link_to(t(:show), [@current_user, client], :class => 'action show') %>
-              <%= link_to(t(:edit), [:edit, @current_user, client], :class => 'action edit') %>
-              <%= link_to(t(:delete), [:delete, @current_user, client], :class => 'action delete') %>
-            </td>
+            <td><%= client.professionals.size %></td>            
           </tr>
         <% end %>
       </tbody>

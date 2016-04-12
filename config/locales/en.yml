@@ -85,3 +85,4 @@ en:
   field_prob: There were problems with the following fields
   create_unsuccess: cannot be created at the moment. Please try again later.
   uniqueness_unsuccess: Retries exhausted. Cannot create a unique token.
+  multiple_professionals: Multiple Professionals

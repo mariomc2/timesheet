@@ -82,6 +82,10 @@ class AppointmentsController < ApplicationController
     redirect_to([@current_user, :appointments])
   end
 
+  def professionals
+    @professionals = Appointment.find(params[:id]).professionals
+  end
+
   private
 
     def set_locale

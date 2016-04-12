@@ -15,6 +15,7 @@
       <thead class="thead-inverse">
         <tr>
           <th>&nbsp;</th>
+          <th>&nbsp;</th>
           <th><%= t(:name) %></th>
           <th><%= t(:id) %></th>
           <th><%= t(:email) %></th>   
@@ -22,7 +23,6 @@
           <th><%= t(:professional).pluralize(locale) %></th>          
           <th><%= t(:client).pluralize(locale) %></th>
           <th><%= t(:appointment).pluralize(locale) %></th>
-          <th><%= t(:action) %></th>
         </tr>
       </thead>
       <tbody>
@@ -30,18 +30,14 @@
         
           <tr class="<%= cycle('odd', 'even') %>">
             <td><%= branch.id %></td>
+            <td> <%= link_to [@current_user, branch] do %> <span class="glyphicon glyphicon-eye-open"></span> <% end %> </td>
             <td><%= branch.name %></td>
             <td><%= branch.id_code %></td>
             <td><%= branch.email %></td>
             <td class="center"><%= branch.company_id %></td>
             <td class="center"><%= branch.company.professionals.size %></td>
             <td class="center"><%= branch.clients.size %></td>            
-            <td class="center"><%= branch.appointments.size %></td>
-            <td class="actions">
-              <%= link_to(t(:show), [@current_user, branch], :class => 'action show') %>
-              <%= link_to(t(:edit), [:edit, @current_user, branch], :class => 'action edit') %>
-              <%= link_to(t(:delete), [:delete, @current_user, branch], :class => 'action delete') %>
-            </td>
+            <td class="center"><%= branch.appointments.size %></td>            
           </tr>
         <% end %>
       </tbody>

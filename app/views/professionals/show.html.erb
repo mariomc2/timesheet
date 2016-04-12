@@ -5,6 +5,15 @@
 <div class="Professionals show">
   <h2><%= t(:show) + " " + t(:professional) %></h2>
 
+  <div>
+    <%= button_to( {controller: "professionals", action: "edit"}, :class => "btn btn-primary btn-xs", :method => :get ) do%>
+      <span class="glyphicon glyphicon-pencil"></span><%=" "+ t(:edit) %>
+    <% end %>    
+    <%= button_to( {controller: "professionals", action: "delete"}, :class => "btn btn-danger btn-xs", :method => :get ) do%>
+      <span class="glyphicon glyphicon-fire"></span><%=" "+ t(:delete) %>
+    <% end %>
+  </div>
+
   <div class="table-responsive">
     <table id="show_table" class="display responsive" summary="Professional detail view">
       <tbody>
@@ -42,7 +51,7 @@
         </tr>
         <tr>
           <th><%= link_to(t(:appointment).pluralize(locale), @is_company ? [@current_user, :appointments, {:professional_id => @professional.id}] : [@professional, :appointments])  %></th>
-          <td><%= @is_company ? @current_user.appointments.select {|s| s.professional_id == params[:id].to_i}.size : @professional.appointments.size %></td>
+          <td><%= @is_company ? @professional.appointments.select {|s| s.company_id == @current_user.id}.size : @professional.appointments.size %></td>
         </tr>
         <tr>
           <th><%= t(:pass_active) %></th>

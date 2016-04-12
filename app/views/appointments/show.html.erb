@@ -5,24 +5,62 @@
 <div class="appointments show">
   <h2><%= t(:show) + " " + t(:appointment) %></h2>
 
+  <div>
+    <%= link_to(t(:edit), [:edit, @current_user, @appointment], :class => 'action edit') %>
+    <%= link_to(t(:delete), [:delete, @current_user, @appointment], :class => 'action delete') %>
+  </div>
+
+  <div>
+    <%= button_to( {controller: "appointments", action: "edit"}, :class => "btn btn-primary btn-xs", :method => :get ) do%>
+      <span class="glyphicon glyphicon-pencil"></span><%=" "+ t(:edit) %>
+    <% end %>    
+    <%= button_to( {controller: "appointments", action: "delete"}, :class => "btn btn-danger btn-xs", :method => :get ) do%>
+      <span class="glyphicon glyphicon-fire"></span><%=" "+ t(:delete) %>
+    <% end %>
+  </div>
+
   <div class="table-responsive">
     <table id="show_table" class="display responsive" summary="appointment detail view">
       <tbody>
         <tr>
           <th><%= t(:company) %></th>
-          <td><%= @appointment.company_id %></td>
+          <td><%= @appointment.company_id ? @is_company ? @appointment.company.name : link_to(@appointment.company.name, [@current_user, @appointment.company]) : "" %></td>
         </tr>
         <tr>
           <th><%= t(:branch) %></th>
-          <td><%= @appointment.branch_id %></td>
+          <td><%= @appointment.branch_id ? @appointment.branch.name : "" %></td>
         </tr>
         <tr>
-          <th><%= t(:professional) %></th>
-          <td><%= @appointment.professionals.size %></td>
+          <th><%= t(:professional).pluralize(@appointment.professionals.size, locale) %></th>
+          <td>      
+            <table class="table table-inverse"> <tbody>
+              <% if !@is_company %> <%# If the user is a professional %>
+                <tr>
+                  <td><b><%= @current_user.first_name + " " + @current_user.last_name %></b></td>
+                  <td><%= "ID: " + @current_user.id.to_s %></td>
+                </tr>
+                <% @appointment.professionals.each do |professional| %>              
+                  <% if @current_user.id != professional.id %> 
+                    <tr>
+                      <td><%= professional.first_name + " " + professional.last_name %></td>
+                      <td><%= "ID: " + professional.id.to_s %></td>
+                    </tr>
+                  <% end %>              
+                <% end %>
+              <% else %> <%# If the user is a company %>              
+                <% @appointment.professionals.each do |professional| %>              
+                    <tr>
+                      <td><%= link_to(professional.first_name + " " + professional.last_name, [@current_user, professional ]) %></td>
+                      <td><%= "ID: " + professional.id.to_s %></td>
+                    </tr>
+                <% end %>
+              <% end %>
+            </tbody> </table>
+          </td>
         </tr>
         <tr>
           <th><%= t(:client) %></th>
-          <td><%= @appointment.client_id %></td>
+          <td><%= @appointment.client_id ? link_to(@appointment.client.first_name + " " + @appointment.client.last_name, [@current_user, @appointment.client]) + " - ID: " + @appointment.client_id.to_s : "" %></td>
         </tr>
         <tr>
           <th><%= t(:shared) %></th>
